@@ -1,23 +1,29 @@
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { Hospital, Menu, X } from "lucide-react";
+import { Hospital, Menu, X, ChevronDown } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation();
+  const { user, logout } = useAuth();
 
   const navItems = [
     { name: "Home", path: "/" },
-    { name: "Appointments", path: "/appointments" },
-    { name: "News", path: "/news" },
-    { name: "Patient Dashboard", path: "/patient-dashboard" },
-    { name: "Doctor Dashboard", path: "/doctor-dashboard" },
-    { name: "Billing", path: "/billing" },
     { name: "Blog", path: "/blog" },
-    { name: "Inventory", path: "/inventory" },
-    { name: "Delivery", path: "/delivery" },
-    { name: "Admin", path: "/admin" },
+    { 
+      name: "Chatbots", 
+      path: "/chatbots",
+      dropdown: [
+        { name: "Symptom Checker", path: "/chatbots/symptom-checker" },
+        { name: "Mental Health Bot", path: "/chatbots/mental-health" },
+        { name: "Recovery Tracker", path: "/chatbots/recovery-tracker" }
+      ]
+    },
+    { name: "Doctors", path: "#doctors", isAnchor: true },
+    { name: "Login", path: "/login" }
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -35,25 +41,76 @@ const Navbar = () => {
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center space-x-1">
             {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                className={`px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 hover:bg-hospital-secondary hover:text-hospital-primary ${
-                  isActive(item.path)
-                    ? "bg-hospital-accent text-hospital-primary"
-                    : "text-white"
-                }`}
-              >
-                {item.name}
-              </Link>
+              <div key={item.name} className="relative">
+                {item.dropdown ? (
+                  <div className="relative">
+                    <button
+                      onMouseEnter={() => setDropdownOpen(true)}
+                      onMouseLeave={() => setDropdownOpen(false)}
+                      className="flex items-center px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 hover:bg-hospital-secondary hover:text-hospital-primary text-white"
+                    >
+                      {item.name}
+                      <ChevronDown className="ml-1 h-4 w-4" />
+                    </button>
+                    {dropdownOpen && (
+                      <div
+                        onMouseEnter={() => setDropdownOpen(true)}
+                        onMouseLeave={() => setDropdownOpen(false)}
+                        className="absolute top-full left-0 mt-1 w-48 bg-white rounded-md shadow-lg border border-gray-200 z-50"
+                      >
+                        {item.dropdown.map((dropdownItem) => (
+                          <Link
+                            key={dropdownItem.name}
+                            to={dropdownItem.path}
+                            className="block px-4 py-2 text-sm text-gray-700 hover:bg-hospital-light hover:text-hospital-primary transition-colors"
+                          >
+                            {dropdownItem.name}
+                          </Link>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                ) : item.isAnchor ? (
+                  <a
+                    href={item.path}
+                    className="px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 hover:bg-hospital-secondary hover:text-hospital-primary text-white"
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link
+                    to={item.path}
+                    className={`px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 hover:bg-hospital-secondary hover:text-hospital-primary ${
+                      isActive(item.path)
+                        ? "bg-hospital-accent text-hospital-primary"
+                        : "text-white"
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                )}
+              </div>
             ))}
           </div>
 
-          {/* Emergency CTA */}
-          <div className="hidden lg:flex">
-            <Button className="bg-hospital-accent hover:bg-yellow-500 text-hospital-primary font-semibold">
-              Emergency
-            </Button>
+          {/* User Actions */}
+          <div className="hidden lg:flex items-center space-x-3">
+            {user ? (
+              <div className="flex items-center space-x-3">
+                <span className="text-sm text-hospital-secondary">Welcome, {user.name}</span>
+                <Button
+                  onClick={logout}
+                  variant="outline"
+                  className="border-hospital-secondary text-hospital-secondary hover:bg-hospital-secondary hover:text-hospital-primary"
+                >
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <Button className="bg-hospital-accent hover:bg-yellow-500 text-hospital-primary font-semibold">
+                Emergency
+              </Button>
+            )}
           </div>
 
           {/* Mobile menu button */}
@@ -73,24 +130,71 @@ const Navbar = () => {
         <div className="lg:hidden bg-hospital-primary border-t border-hospital-secondary">
           <div className="px-2 pt-2 pb-3 space-y-1">
             {navItems.map((item) => (
-              <Link
-                key={item.name}
-                to={item.path}
-                onClick={() => setIsOpen(false)}
-                className={`block px-3 py-2 text-base font-medium rounded-md transition-all duration-200 ${
-                  isActive(item.path)
-                    ? "bg-hospital-accent text-hospital-primary"
-                    : "text-white hover:bg-hospital-secondary hover:text-hospital-primary"
-                }`}
-              >
-                {item.name}
-              </Link>
+              <div key={item.name}>
+                {item.dropdown ? (
+                  <div>
+                    <div className="px-3 py-2 text-base font-medium text-white">
+                      {item.name}
+                    </div>
+                    <div className="pl-4 space-y-1">
+                      {item.dropdown.map((dropdownItem) => (
+                        <Link
+                          key={dropdownItem.name}
+                          to={dropdownItem.path}
+                          onClick={() => setIsOpen(false)}
+                          className="block px-3 py-2 text-sm text-hospital-secondary hover:bg-hospital-secondary hover:text-hospital-primary rounded-md transition-colors"
+                        >
+                          {dropdownItem.name}
+                        </Link>
+                      ))}
+                    </div>
+                  </div>
+                ) : item.isAnchor ? (
+                  <a
+                    href={item.path}
+                    onClick={() => setIsOpen(false)}
+                    className="block px-3 py-2 text-base font-medium rounded-md text-white hover:bg-hospital-secondary hover:text-hospital-primary transition-all duration-200"
+                  >
+                    {item.name}
+                  </a>
+                ) : (
+                  <Link
+                    to={item.path}
+                    onClick={() => setIsOpen(false)}
+                    className={`block px-3 py-2 text-base font-medium rounded-md transition-all duration-200 ${
+                      isActive(item.path)
+                        ? "bg-hospital-accent text-hospital-primary"
+                        : "text-white hover:bg-hospital-secondary hover:text-hospital-primary"
+                    }`}
+                  >
+                    {item.name}
+                  </Link>
+                )}
+              </div>
             ))}
-            <div className="pt-2">
-              <Button className="w-full bg-hospital-accent hover:bg-yellow-500 text-hospital-primary font-semibold">
-                Emergency
-              </Button>
-            </div>
+            
+            {user ? (
+              <div className="pt-2 space-y-2">
+                <div className="px-3 py-2 text-sm text-hospital-secondary">
+                  Welcome, {user.name}
+                </div>
+                <Button
+                  onClick={() => {
+                    logout();
+                    setIsOpen(false);
+                  }}
+                  className="w-full bg-hospital-secondary hover:bg-hospital-light text-hospital-primary font-semibold"
+                >
+                  Logout
+                </Button>
+              </div>
+            ) : (
+              <div className="pt-2">
+                <Button className="w-full bg-hospital-accent hover:bg-yellow-500 text-hospital-primary font-semibold">
+                  Emergency
+                </Button>
+              </div>
+            )}
           </div>
         </div>
       )}

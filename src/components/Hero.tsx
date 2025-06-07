@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import DoctorSlider from "./DoctorSlider";
 
 const Hero = () => {
   const services = [
@@ -110,6 +111,11 @@ const Hero = () => {
           </div>
         </div>
       </section>
+
+      {/* Doctor Slider Section */}
+      <div id="doctors">
+        <DoctorSlider />
+      </div>
     </div>
   );
 };

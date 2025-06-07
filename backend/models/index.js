@@ -1,8 +1,7 @@
 // Model exports for Hospital AI System
-// This file will export all database models once they're created
+const User = require('./User');
 
 // Future models to be added:
-// const User = require('./User');
 // const Patient = require('./Patient');
 // const Doctor = require('./Doctor');
 // const Appointment = require('./Appointment');
@@ -11,17 +10,7 @@
 // const Inventory = require('./Inventory');
 // const Department = require('./Department');
 
-// module.exports = {
-//   User,
-//   Patient,
-//   Doctor,
-//   Appointment,
-//   MedicalRecord,
-//   Billing,
-//   Inventory,
-//   Department
-// };
-
 module.exports = {
-  // Models will be exported here as they are created
+  User,
+  // Additional models will be exported here as they are created
 };

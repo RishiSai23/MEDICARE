@@ -21,8 +21,10 @@ router.get('/health', (req, res) => {
   });
 });
 
+// Authentication routes
+router.use('/auth', require('./auth'));
+
 // Future routes will be added here:
-// router.use('/auth', require('./auth'));
 // router.use('/patients', require('./patients'));
 // router.use('/doctors', require('./doctors'));
 // router.use('/appointments', require('./appointments'));

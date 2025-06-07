@@ -1,73 +1,240 @@
-# Welcome to your Lovable project
+# 🏥 HospitalAI - MERN Stack Hospital Management System
 
-## Project info
+A comprehensive digital healthcare management platform built with the MERN stack (MongoDB, Express.js, React.js, Node.js).
 
-**URL**: https://lovable.dev/projects/8477f951-76b1-4019-909e-7cb429c2bd56
+## 🌟 Features
 
-## How can I edit this code?
+### Frontend (React.js + Tailwind CSS)
+- **Professional Medical UI** with hospital color scheme (#0A4D68, #88CFE0, #F4B400)
+- **Responsive Design** optimized for desktop, tablet, and mobile
+- **Interactive Navigation** with sticky navbar and smooth animations
+- **Modular Components** for easy maintenance and scalability
 
-There are several ways of editing your application.
+### Backend (Node.js + Express.js)
+- **RESTful API** architecture with proper error handling
+- **MongoDB Integration** using Mongoose ODM
+- **Environment Configuration** with .env support
+- **Scalable Structure** with controllers, routes, and models
 
-**Use Lovable**
+### Core Modules
+- 🏠 **Home** - Landing page with hero section and services
+- 📅 **Appointments** - Schedule and manage medical appointments
+- 📰 **News** - Hospital announcements and health news
+- 👤 **Patient Dashboard** - Personal health records and portal
+- 👨‍⚕️ **Doctor Dashboard** - Medical practice management
+- 💳 **Billing** - Payment processing and invoice management
+- 📝 **Blog** - Health education and medical insights
+- 📦 **Inventory** - Medical supplies and equipment tracking
+- 🚚 **Delivery** - Medicine and supply delivery services
+- ⚙️ **Admin** - Hospital administration and settings
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/8477f951-76b1-4019-909e-7cb429c2bd56) and start prompting.
+## 🚀 Quick Start
 
-Changes made via Lovable will be committed automatically to this repo.
+### Prerequisites
+- Node.js (v14+)
+- npm or yarn
+- MongoDB (local or cloud instance)
 
-**Use your preferred IDE**
+### Installation
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
+1. **Clone the repository**
+```bash
+git clone <your-repo-url>
+cd hospital-ai
+```
 
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
+2. **Install frontend dependencies**
+```bash
+npm install
+```
 
-Follow these steps:
+3. **Install backend dependencies**
+```bash
+cd backend
+npm install
+cd ..
+```
 
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
+4. **Setup environment variables**
+```bash
+cd backend
+cp .env.example .env
+# Edit .env with your MongoDB URI and other configurations
+```
 
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
+5. **Run the development servers**
 
-# Step 3: Install the necessary dependencies.
-npm i
+**Option 1: Run both frontend and backend together (Recommended)**
+```bash
+npx concurrently "npm run dev" "cd backend && npm run dev"
+```
 
-# Step 4: Start the development server with auto-reloading and an instant preview.
+**Option 2: Run separately**
+
+Frontend (Terminal 1):
+```bash
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+Backend (Terminal 2):
+```bash
+cd backend
+npm run dev
+```
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### 🌐 Access Points
+- **Frontend**: http://localhost:8080
+- **Backend API**: http://localhost:5000
+- **API Health Check**: http://localhost:5000/health
+- **API Test Endpoint**: http://localhost:5000/api/test
 
-**Use GitHub Codespaces**
+## 📁 Project Structure
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+```
+hospital-ai/
+├── 📁 frontend/ (React App)
+│   ├── 📁 src/
+│   │   ├── 📁 components/
+│   │   │   ├── Navbar.tsx
+│   │   │   ├── Hero.tsx
+│   │   │   └── Footer.tsx
+│   │   ├── 📁 pages/
+│   │   │   ├── Index.tsx
+│   │   │   ├── Appointments.tsx
+│   │   │   ├── PatientDashboard.tsx
+│   │   │   └── ... (other pages)
+│   │   └── App.tsx
+│   ├── tailwind.config.ts
+│   └── package.json
+├── 📁 backend/ (Node.js API)
+│   ├── 📁 routes/
+│   │   └── api.js
+│   ├── 📁 controllers/
+│   │   └── testController.js
+│   ├── 📁 models/
+│   │   └── index.js
+│   ├── server.js
+│   ├── package.json
+│   └── .env.example
+└── README.md
+```
 
-## What technologies are used for this project?
+## 🎨 Design System
 
-This project is built with:
+### Color Palette (60-30-10 Rule)
+- **Primary (60%)**: `#0A4D68` - Professional medical blue for headers, navbars
+- **Secondary (30%)**: `#88CFE0` - Light blue for backgrounds, buttons
+- **Accent (10%)**: `#F4B400` - Golden yellow for highlights, CTAs, icons
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+### Typography & Spacing
+- Clean, medical-grade typography with proper contrast
+- Consistent spacing using Tailwind CSS utilities
+- Responsive design patterns for all device sizes
 
-## How can I deploy this project?
+### Components
+- Shadcn UI components for consistent design language
+- Custom hospital-themed components with professional styling
+- Hover animations and smooth transitions
 
-Simply open [Lovable](https://lovable.dev/projects/8477f951-76b1-4019-909e-7cb429c2bd56) and click on Share -> Publish.
+## 🔧 Development
 
-## Can I connect a custom domain to my Lovable project?
+### Frontend Development
+- Built with **Vite** for fast development and building
+- **TypeScript** for type safety
+- **React Router** for navigation
+- **Tailwind CSS** for styling
+- **Shadcn UI** for component library
 
-Yes, you can!
+### Backend Development
+- **Express.js** server with middleware
+- **MongoDB** with Mongoose ODM
+- **CORS** enabled for frontend communication
+- **Environment-based configuration**
+- **Error handling** and logging
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+### API Endpoints
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+#### Base Endpoints
+- `GET /health` - Server health check
+- `GET /api/test` - API functionality test
+- `POST /api/test` - API POST test
+
+#### Future Endpoints (To be implemented)
+- `/api/auth` - Authentication and authorization
+- `/api/patients` - Patient management
+- `/api/doctors` - Doctor management
+- `/api/appointments` - Appointment scheduling
+- `/api/billing` - Billing and payments
+- `/api/inventory` - Inventory management
+
+## 🔐 Environment Variables
+
+Copy `backend/.env.example` to `backend/.env` and configure:
+
+```env
+PORT=5000
+NODE_ENV=development
+MONGODB_URI=mongodb://localhost:27017/hospitalai
+JWT_SECRET=your_jwt_secret_key_here
+JWT_EXPIRE=24h
+FRONTEND_URL=http://localhost:8080
+```
+
+## 📱 Mobile Responsiveness
+
+The application is fully responsive with:
+- Mobile-first design approach
+- Collapsible navigation menu
+- Touch-friendly interface elements
+- Optimized layouts for different screen sizes
+
+## 🔮 Future Enhancements
+
+### Phase 1 - Core Functionality
+- [ ] User authentication and authorization
+- [ ] Patient registration and profiles
+- [ ] Doctor scheduling system
+- [ ] Appointment booking with calendar integration
+
+### Phase 2 - Advanced Features
+- [ ] Medical record management
+- [ ] Prescription handling
+- [ ] Billing and insurance processing
+- [ ] Real-time notifications
+
+### Phase 3 - Integration & Analytics
+- [ ] Third-party integrations (insurance, pharmacy)
+- [ ] Analytics dashboard
+- [ ] Telemedicine capabilities
+- [ ] Mobile app development
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## 🛠️ Built With
+
+- **Frontend**: React.js, TypeScript, Tailwind CSS, Vite
+- **Backend**: Node.js, Express.js, MongoDB, Mongoose
+- **UI Components**: Shadcn UI, Radix UI
+- **Icons**: Lucide React
+- **Development**: Concurrently, Nodemon
+
+## 📞 Support
+
+For support and questions:
+- Create an issue in the GitHub repository
+- Contact the development team
+- Check the documentation wiki
+
+---
+
+**HospitalAI** - Revolutionizing healthcare management with modern web technologies 🚀

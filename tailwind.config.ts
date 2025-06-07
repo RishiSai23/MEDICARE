@@ -61,6 +61,14 @@ export default {
 					'accent-foreground': 'hsl(var(--sidebar-accent-foreground))',
 					border: 'hsl(var(--sidebar-border))',
 					ring: 'hsl(var(--sidebar-ring))'
+				},
+				// Hospital Color Theme
+				hospital: {
+					primary: '#0A4D68',
+					secondary: '#88CFE0',
+					accent: '#F4B400',
+					light: '#F8FEFF',
+					dark: '#042B3A'
 				}
 			},
 			borderRadius: {

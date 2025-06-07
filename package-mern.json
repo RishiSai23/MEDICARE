@@ -1,0 +1,37 @@
+{
+  "name": "hospital-ai-mern",
+  "version": "1.0.0",
+  "description": "Complete MERN Stack Hospital Management System",
+  "main": "index.js",
+  "scripts": {
+    "dev": "concurrently \"npm run frontend\" \"npm run backend\"",
+    "frontend": "npm run dev",
+    "backend": "cd backend && npm run dev",
+    "start": "concurrently \"npm run frontend\" \"npm run backend:start\"",
+    "backend:start": "cd backend && npm start",
+    "install-frontend": "npm install",
+    "install-backend": "cd backend && npm install",
+    "install-all": "npm run install-frontend && npm run install-backend",
+    "build": "npm run build",
+    "test": "npm test && cd backend && npm test"
+  },
+  "keywords": [
+    "mern",
+    "hospital",
+    "healthcare",
+    "management",
+    "react",
+    "node",
+    "express",
+    "mongodb"
+  ],
+  "author": "Hospital AI Development Team",
+  "license": "MIT",
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "engines": {
+    "node": ">=14.0.0",
+    "npm": ">=6.0.0"
+  }
+}

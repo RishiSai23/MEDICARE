@@ -15,9 +15,9 @@ const services = [
 ];
 
 const testimonials = [
-  { id: 1, name: "Jane Doe", feedback: "The doctors and staff at HospitalAI made me feel cared for every step of the way. Highly recommend!", image: "https://i.pravatar.cc/100?img=32" },
+  { id: 1, name: "Jane Doe", feedback: "The doctor was extremely professional, listened carefully, and provided a clear diagnosis.", image: "https://i.pravatar.cc/100?img=32" },
   { id: 2, name: "John Smith", feedback: "Excellent facilities and professional team. My recovery was faster than expected.", image: "https://i.pravatar.cc/100?img=33" },
-  { id: 3, name: "Maria Lopez", feedback: "Friendly staff and highly skilled doctors. I felt safe and informed during my treatment.", image: "https://i.pravatar.cc/100?img=34" },
+  { id: 3, name: "Maria Lopez", feedback: "I appreciated the way the doctor explained everything in simple terms and made me feel at ease.", image: "https://i.pravatar.cc/100?img=34" },
 ];
 
 function useCountUp(end: number, duration = 2000) {
@@ -44,7 +44,7 @@ const MainPage = () => {
   return (
     <main className="bg-hospital-light text-hospital-dark font-sans">
       <section className="bg-hospital-primary text-white py-20 px-6 text-center">
-        <h1 className="text-4xl md:text-6xl font-extrabold mb-4">Welcome to HospitalAI</h1>
+        <h1 className="text-4xl md:text-6xl font-extrabold mb-4">Welcome to MEDICARE</h1>
         <p className="max-w-xl mx-auto mb-8 text-lg md:text-xl">Advanced Healthcare Management System with expert care & modern facilities.</p>
         <button className="bg-hospital-accent hover:bg-yellow-500 text-hospital-dark font-semibold px-8 py-3 rounded-md shadow-lg transition" onClick={() => alert("Booking functionality coming soon!")}>Book an Appointment</button>
       </section>
@@ -52,7 +52,7 @@ const MainPage = () => {
       <section className="max-w-7xl mx-auto px-6 py-16 md:flex md:items-center md:gap-16">
       <img src="/doc-index.png" alt="Hospital" className="rounded-2xl shadow-lg w-full max-w-md mx-auto"/>
         <div className="md:flex-1">
-          <h2 className="text-3xl font-bold text-hospital-primary mb-4">About HospitalAI</h2>
+          <h2 className="text-3xl font-bold text-hospital-primary mb-4">About MEDICARE</h2>
           <p className="text-gray-700 mb-4 leading-relaxed">At HospitalAI, we are committed to providing comprehensive medical services backed by state-of-the-art technology and compassionate care. Our team of expert doctors and medical staff ensure every patient receives personalized treatment.</p>
           <p className="text-gray-700 leading-relaxed">From diagnostics to post-operative care, we focus on delivering the highest quality healthcare services to improve the wellbeing of every individual.</p>
         </div>

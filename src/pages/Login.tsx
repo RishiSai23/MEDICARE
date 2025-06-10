@@ -1,108 +1,87 @@
-import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAuth } from "@/contexts/AuthContext";
-import { useToast } from "@/hooks/use-toast";
+import React, { useState } from "react";
 
 const Login = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const { login } = useAuth();
-  const navigate = useNavigate();
-  const { toast } = useToast();
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      const success = await login(email, password);
-      if (success) {
-        toast({
-          title: "Login Successful",
-          description: "Welcome back! Redirecting to your dashboard...",
-        });
-        // The redirect will be handled by the useEffect in App.tsx based on user role
-        navigate("/");
-      } else {
-        toast({
-          title: "Login Failed",
-          description: "Invalid email or password. Please try again.",
-          variant: "destructive",
-        });
-      }
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "Something went wrong. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  const [isSignUp, setIsSignUp] = useState(false);
 
   return (
-    <div className="min-h-screen bg-hospital-light flex items-center justify-center px-4">
-      <Card className="w-full max-w-md">
-        <CardHeader className="text-center">
-          <CardTitle className="text-2xl font-bold text-hospital-primary">
-            Hospital AI Login
-          </CardTitle>
-          <p className="text-gray-600">Sign in to access your dashboard</p>
-        </CardHeader>
-        <CardContent>
-          <form onSubmit={handleSubmit} className="space-y-4">
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-1">
-                Email Address
-              </label>
-              <Input
-                id="email"
+    <div className="flex items-center justify-center h-[calc(100vh-80px)] w-full bg-gradient-to-r from-gray-100 to-blue-200 p-0">
+      <div className="relative w-full h-full bg-white flex flex-col md:flex-row">
+        {/* Left Form Section */}
+        <div className="w-full md:w-1/2 p-8 md:p-20 space-y-6 flex flex-col justify-center">
+          {isSignUp ? (
+            <>
+              <h2 className="text-3xl font-bold text-gray-900">Create Account</h2>
+              <p className="text-sm text-gray-500">or use your email for registration</p>
+              <input
+                type="text"
+                placeholder="Name"
+                className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <input
                 type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder="Enter your email"
-                required
-                disabled={isLoading}
+                placeholder="Email"
+                className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-            </div>
-            <div>
-              <label htmlFor="password" className="block text-sm font-medium text-gray-700 mb-1">
-                Password
-              </label>
-              <Input
-                id="password"
+              <input
                 type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter your password"
-                required
-                disabled={isLoading}
+                placeholder="Password"
+                className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
               />
-            </div>
-            <Button
-              type="submit"
-              className="w-full bg-hospital-primary hover:bg-hospital-dark text-white"
-              disabled={isLoading}
-            >
-              {isLoading ? "Signing in..." : "Sign In"}
-            </Button>
-          </form>
-          
-          <div className="mt-6 p-4 bg-gray-50 rounded-md">
-            <p className="text-xs text-gray-600 mb-2">Demo Accounts:</p>
-            <div className="space-y-1 text-xs">
-              <p><strong>Patient:</strong> patient@demo.com | password123</p>
-              <p><strong>Doctor:</strong> doctor@demo.com | password123</p>
-              <p><strong>Admin:</strong> admin@demo.com | password123</p>
-            </div>
-          </div>
-        </CardContent>
-      </Card>
+              <button className="bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700 transition">
+                Sign Up
+              </button>
+            </>
+          ) : (
+            <>
+              <h2 className="text-3xl font-bold text-gray-900">Sign In</h2>
+              <p className="text-sm text-gray-500">or use your email and password</p>
+              <input
+                type="email"
+                placeholder="Email"
+                className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <input
+                type="password"
+                placeholder="Password"
+                className="p-3 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+              />
+              <div className="text-sm text-right text-blue-600 hover:underline cursor-pointer">
+                Forgot your password?
+              </div>
+              <button className="bg-blue-600 text-white px-6 py-3 rounded-md hover:bg-blue-700 transition">
+                Sign In
+              </button>
+            </>
+          )}
+        </div>
+
+        {/* Right Toggle Panel */}
+        <div className="w-full md:w-1/2 bg-gradient-to-tr from-blue-700 to-blue-500 text-white flex flex-col justify-center items-center text-center p-8 md:p-20 space-y-6">
+          {isSignUp ? (
+            <>
+              <h2 className="text-3xl font-bold">Welcome Back!</h2>
+              <p className="text-sm">Enter your details to access your account</p>
+              <button
+                onClick={() => setIsSignUp(false)}
+                className="border border-white px-6 py-2 rounded-md hover:bg-white hover:text-blue-700 transition"
+              >
+                Sign In
+              </button>
+            </>
+          ) : (
+            <>
+              <h2 className="text-3xl font-bold">Hello, Friend!</h2>
+              <p className="text-sm">Register with your details to use all site features</p>
+              <button
+                onClick={() => setIsSignUp(true)}
+                className="border border-white px-6 py-2 rounded-md hover:bg-white hover:text-blue-700 transition"
+              >
+                Sign Up
+              </button>
+            </>
+          )}
+        </div>
+      </div>
     </div>
   );
 };

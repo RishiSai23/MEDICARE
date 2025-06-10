@@ -19,10 +19,8 @@ import DoctorDashboard from "./pages/Dashboard/DoctorDashboard";
 import AdminDashboard from "./pages/Dashboard/AdminDashboard";
 import NotFound from "./pages/NotFound";
 
-// Query client
 const queryClient = new QueryClient();
 
-// Role-based redirect component
 const RoleBasedRedirect = () => {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;

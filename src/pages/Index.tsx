@@ -1,11 +1,5 @@
-import Hero from "@/components/Hero";
+import MainPage from "@/components/MainPage";
 
-const Index = () => {
-  return (
-    <div>
-      <Hero />
-    </div>
-  );
-};
+const Index = () => <MainPage />;
 
 export default Index;

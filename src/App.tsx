@@ -7,7 +7,9 @@ import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import PrivateRoute from "./components/PrivateRoute";
-import Index from "./pages/Index";
+
+// Pages
+import MainPage from "./components/MainPage"; // ✅ NEW unified main landing page
 import Login from "./pages/Login";
 import Blog from "./pages/Blog";
 import Chatbots from "./pages/Chatbots";
@@ -17,16 +19,13 @@ import DoctorDashboard from "./pages/Dashboard/DoctorDashboard";
 import AdminDashboard from "./pages/Dashboard/AdminDashboard";
 import NotFound from "./pages/NotFound";
 
+// Query client
 const queryClient = new QueryClient();
 
 // Role-based redirect component
 const RoleBasedRedirect = () => {
   const { user } = useAuth();
-  
-  if (!user) {
-    return <Navigate to="/login" replace />;
-  }
-  
+  if (!user) return <Navigate to="/login" replace />;
   return <Navigate to={`/dashboard/${user.role}`} replace />;
 };
 
@@ -41,47 +40,57 @@ const App = () => (
             <Navbar />
             <main className="flex-1">
               <Routes>
-                <Route path="/" element={<Index />} />
+                {/* ✅ Landing Page */}
+                <Route path="/" element={<MainPage />} />
+
+                {/* Public Routes */}
                 <Route path="/login" element={<Login />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/chatbots" element={<Chatbots />} />
                 <Route path="/doctors" element={<Doctors />} />
-                
-                {/* Dashboard Routes - Protected */}
-                <Route 
-                  path="/dashboard" 
-                  element={<RoleBasedRedirect />} 
-                />
-                <Route 
-                  path="/dashboard/patient" 
+
+                {/* Protected Dashboard Routes */}
+                <Route path="/dashboard" element={<RoleBasedRedirect />} />
+                <Route
+                  path="/dashboard/patient"
                   element={
                     <PrivateRoute requiredRole="patient">
                       <PatientDashboard />
                     </PrivateRoute>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/dashboard/doctor" 
+                <Route
+                  path="/dashboard/doctor"
                   element={
                     <PrivateRoute requiredRole="doctor">
                       <DoctorDashboard />
                     </PrivateRoute>
-                  } 
+                  }
                 />
-                <Route 
-                  path="/dashboard/admin" 
+                <Route
+                  path="/dashboard/admin"
                   element={
                     <PrivateRoute requiredRole="admin">
                       <AdminDashboard />
                     </PrivateRoute>
-                  } 
+                  }
                 />
-                
-                {/* Chatbot sub-routes */}
-                <Route path="/chatbots/symptom-checker" element={<div>Symptom Checker Coming Soon</div>} />
-                <Route path="/chatbots/mental-health" element={<div>Mental Health Bot Coming Soon</div>} />
-                <Route path="/chatbots/recovery-tracker" element={<div>Recovery Tracker Coming Soon</div>} />
-                
+
+                {/* Subpages under Chatbots */}
+                <Route
+                  path="/chatbots/symptom-checker"
+                  element={<div>Symptom Checker Coming Soon</div>}
+                />
+                <Route
+                  path="/chatbots/mental-health"
+                  element={<div>Mental Health Bot Coming Soon</div>}
+                />
+                <Route
+                  path="/chatbots/recovery-tracker"
+                  element={<div>Recovery Tracker Coming Soon</div>}
+                />
+
+                {/* 404 Not Found */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

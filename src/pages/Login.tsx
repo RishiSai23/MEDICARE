@@ -10,8 +10,12 @@ const Login = () => {
         <div className="w-full md:w-1/2 p-8 md:p-20 space-y-6 flex flex-col justify-center">
           {isSignUp ? (
             <>
-              <h2 className="text-3xl font-bold text-gray-900">Create Account</h2>
-              <p className="text-sm text-gray-500">or use your email for registration</p>
+              <h2 className="text-3xl font-bold text-gray-900">
+                Create Account
+              </h2>
+              <p className="text-sm text-gray-500">
+                or use your email for registration
+              </p>
               <input
                 type="text"
                 placeholder="Name"
@@ -34,7 +38,9 @@ const Login = () => {
           ) : (
             <>
               <h2 className="text-3xl font-bold text-gray-900">Sign In</h2>
-              <p className="text-sm text-gray-500">or use your email and password</p>
+              <p className="text-sm text-gray-500">
+                or use your email and password
+              </p>
               <input
                 type="email"
                 placeholder="Email"
@@ -60,7 +66,9 @@ const Login = () => {
           {isSignUp ? (
             <>
               <h2 className="text-3xl font-bold">Welcome Back!</h2>
-              <p className="text-sm">Enter your details to access your account</p>
+              <p className="text-sm">
+                Enter your details to access your account
+              </p>
               <button
                 onClick={() => setIsSignUp(false)}
                 className="border border-white px-6 py-2 rounded-md hover:bg-white hover:text-blue-700 transition"
@@ -71,7 +79,9 @@ const Login = () => {
           ) : (
             <>
               <h2 className="text-3xl font-bold">Hello, Friend!</h2>
-              <p className="text-sm">Register with your details to use all site features</p>
+              <p className="text-sm">
+                Register with your details to use all site features
+              </p>
               <button
                 onClick={() => setIsSignUp(true)}
                 className="border border-white px-6 py-2 rounded-md hover:bg-white hover:text-blue-700 transition"

@@ -86,7 +86,7 @@ const Login = () => {
                 onClick={() => setIsSignUp(true)}
                 className="border border-white px-6 py-2 rounded-md hover:bg-white hover:text-blue-700 transition"
               >
-                Sign Up
+                Sign Up to enjoy the features!!
               </button>
             </>
           )}

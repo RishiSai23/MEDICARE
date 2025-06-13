@@ -1,8 +1,8 @@
+import { Button } from "@/components/ui/button";
+import { useAuth } from "@/contexts/AuthContext";
+import { ChevronDown, Hospital, Menu, X } from "lucide-react";
 import { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { Button } from "@/components/ui/button";
-import { Hospital, Menu, X, ChevronDown } from "lucide-react";
-import { useAuth } from "@/contexts/AuthContext";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -13,17 +13,17 @@ const Navbar = () => {
   const navItems = [
     { name: "Home", path: "/" },
     { name: "Blog", path: "/blog" },
-    { 
-      name: "Chatbots", 
+    {
+      name: "Chatbots",
       path: "/chatbots",
       dropdown: [
         { name: "Symptom Checker", path: "/chatbots/symptom-checker" },
         { name: "Mental Health Bot", path: "/chatbots/mental-health" },
-        { name: "Recovery Tracker", path: "/chatbots/recovery-tracker" }
-      ]
+        { name: "Recovery Tracker", path: "/chatbots/recovery-tracker" },
+      ],
     },
-    { name: "Doctors", path: "#doctors", isAnchor: true },
-    { name: "Login", path: "/login" }
+    { name: "Doctors", path: "/doctors" },
+    { name: "Login", path: "/login" },
   ];
 
   const isActive = (path: string) => location.pathname === path;
@@ -70,13 +70,6 @@ const Navbar = () => {
                       </div>
                     )}
                   </div>
-                ) : item.isAnchor ? (
-                  <a
-                    href={item.path}
-                    className="px-3 py-2 text-sm font-medium rounded-md transition-all duration-200 hover:bg-hospital-secondary hover:text-hospital-primary text-white"
-                  >
-                    {item.name}
-                  </a>
                 ) : (
                   <Link
                     to={item.path}
@@ -149,14 +142,6 @@ const Navbar = () => {
                       ))}
                     </div>
                   </div>
-                ) : item.isAnchor ? (
-                  <a
-                    href={item.path}
-                    onClick={() => setIsOpen(false)}
-                    className="block px-3 py-2 text-base font-medium rounded-md text-white hover:bg-hospital-secondary hover:text-hospital-primary transition-all duration-200"
-                  >
-                    {item.name}
-                  </a>
                 ) : (
                   <Link
                     to={item.path}
@@ -172,7 +157,7 @@ const Navbar = () => {
                 )}
               </div>
             ))}
-            
+
             {user ? (
               <div className="pt-2 space-y-2">
                 <div className="px-3 py-2 text-sm text-hospital-secondary">

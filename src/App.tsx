@@ -1,26 +1,36 @@
-import { Toaster } from "@/components/ui/toaster";
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
-import { AuthProvider, useAuth } from "./contexts/AuthContext";
-import Navbar from "./components/Navbar";
+import { BrowserRouter, Navigate, Route, Routes } from "react-router-dom";
+
+// UI
+import { Toaster as Sonner } from "@/components/ui/sonner";
+import { Toaster } from "@/components/ui/toaster";
+import { TooltipProvider } from "@/components/ui/tooltip";
+
+// Layout
 import Footer from "./components/Footer";
+import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
 
+// Auth Context
+import { AuthProvider, useAuth } from "./contexts/AuthContext";
+
 // Pages
-import MainPage from "./components/MainPage"; // ✅ NEW unified main landing page
-import Login from "./pages/Login";
+import MainPage from "./components/MainPage";
 import Blog from "./pages/Blog";
 import Chatbots from "./pages/Chatbots";
-import Doctors from "./pages/Doctors";
-import PatientDashboard from "./pages/Dashboard/PatientDashboard";
-import DoctorDashboard from "./pages/Dashboard/DoctorDashboard";
 import AdminDashboard from "./pages/Dashboard/AdminDashboard";
+import DoctorDashboard from "./pages/Dashboard/DoctorDashboard";
+import PatientDashboard from "./pages/Dashboard/PatientDashboard";
+import Doctors from "./pages/Doctors"; // ✅ Doctors Page
+import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
+
+// ✅ New Appointment Form Page
+import AppointmentForm from "./pages/AppointmentForm";
 
 const queryClient = new QueryClient();
 
+// ✅ Role-based redirect logic for /dashboard
 const RoleBasedRedirect = () => {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
@@ -34,21 +44,40 @@ const App = () => (
       <Sonner />
       <AuthProvider>
         <BrowserRouter>
-          <div className="min-h-screen flex flex-col">
+          <div className="min-h-screen flex flex-col bg-background text-foreground">
             <Navbar />
             <main className="flex-1">
               <Routes>
                 {/* ✅ Landing Page */}
                 <Route path="/" element={<MainPage />} />
 
-                {/* Public Routes */}
+                {/* ✅ Public Pages */}
                 <Route path="/login" element={<Login />} />
                 <Route path="/blog" element={<Blog />} />
                 <Route path="/chatbots" element={<Chatbots />} />
                 <Route path="/doctors" element={<Doctors />} />
 
-                {/* Protected Dashboard Routes */}
+                {/* ✅ New Book Appointment Page */}
+                <Route path="/appointment" element={<AppointmentForm />} />
+
+                {/* ✅ Chatbots Subpages (Coming Soon) */}
+                <Route
+                  path="/chatbots/symptom-checker"
+                  element={<div>Symptom Checker Coming Soon</div>}
+                />
+                <Route
+                  path="/chatbots/mental-health"
+                  element={<div>Mental Health Bot Coming Soon</div>}
+                />
+                <Route
+                  path="/chatbots/recovery-tracker"
+                  element={<div>Recovery Tracker Coming Soon</div>}
+                />
+
+                {/* ✅ Dashboard Role-Based Redirect */}
                 <Route path="/dashboard" element={<RoleBasedRedirect />} />
+
+                {/* ✅ Protected Role Dashboards */}
                 <Route
                   path="/dashboard/patient"
                   element={
@@ -74,21 +103,7 @@ const App = () => (
                   }
                 />
 
-                {/* Subpages under Chatbots */}
-                <Route
-                  path="/chatbots/symptom-checker"
-                  element={<div>Symptom Checker Coming Soon</div>}
-                />
-                <Route
-                  path="/chatbots/mental-health"
-                  element={<div>Mental Health Bot Coming Soon</div>}
-                />
-                <Route
-                  path="/chatbots/recovery-tracker"
-                  element={<div>Recovery Tracker Coming Soon</div>}
-                />
-
-                {/* 404 Not Found */}
+                {/* ✅ 404 Not Found */}
                 <Route path="*" element={<NotFound />} />
               </Routes>
             </main>

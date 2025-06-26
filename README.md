@@ -5,7 +5,7 @@ A comprehensive digital healthcare management platform built with the MERN stack
 ## 🌟 Features
 
 ### Frontend (React.js + Tailwind CSS)
-- **Professional Medical UI** with hospital color scheme (#0A4D68, #88CFE0, #F4B400)
+- **Professional Medical UI** with hospital color scheme 
 - **Responsive Design** optimized for desktop, tablet, and mobile
 - **Interactive Navigation** with sticky navbar and smooth animations
 - **Modular Components** for easy maintenance and scalability

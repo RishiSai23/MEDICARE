@@ -8,7 +8,7 @@ const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [dropdownOpen, setDropdownOpen] = useState(false);
   const location = useLocation();
-  const { user, logout } = useAuth();
+  const { user, isLoading } = useAuth();
 
   const navItems = [
     { name: "Home", path: "/" },
@@ -86,20 +86,9 @@ const Navbar = () => {
             ))}
           </div>
 
-          {/* User Actions */}
+          {/* Right Side Action */}
           <div className="hidden lg:flex items-center space-x-3">
-            {user ? (
-              <div className="flex items-center space-x-3">
-                <span className="text-sm text-hospital-secondary">Welcome, {user.name}</span>
-                <Button
-                  onClick={logout}
-                  variant="outline"
-                  className="border-hospital-secondary text-hospital-secondary hover:bg-hospital-secondary hover:text-hospital-primary"
-                >
-                  Logout
-                </Button>
-              </div>
-            ) : (
+            {!isLoading && !user && (
               <Button className="bg-hospital-accent hover:bg-yellow-500 text-hospital-primary font-semibold">
                 Emergency
               </Button>
@@ -158,22 +147,7 @@ const Navbar = () => {
               </div>
             ))}
 
-            {user ? (
-              <div className="pt-2 space-y-2">
-                <div className="px-3 py-2 text-sm text-hospital-secondary">
-                  Welcome, {user.name}
-                </div>
-                <Button
-                  onClick={() => {
-                    logout();
-                    setIsOpen(false);
-                  }}
-                  className="w-full bg-hospital-secondary hover:bg-hospital-light text-hospital-primary font-semibold"
-                >
-                  Logout
-                </Button>
-              </div>
-            ) : (
+            {!isLoading && !user && (
               <div className="pt-2">
                 <Button className="w-full bg-hospital-accent hover:bg-yellow-500 text-hospital-primary font-semibold">
                   Emergency

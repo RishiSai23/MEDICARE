@@ -1,52 +1,70 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "@/lib/supabaseClient";
 
-const AuthContext = createContext(null);
+interface User {
+  id: string;
+  email: string;
+  name: string;
+  role: "admin" | "doctor" | "patient" | "cashier";
+}
 
-export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+interface AuthContextType {
+  user: User | null;
+  isLoading: boolean;
+  logout: () => Promise<void>;
+}
 
-  const fetchUserProfile = async (userId) => {
+const AuthContext = createContext<AuthContextType | undefined>(undefined);
+
+export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+  const [user, setUser] = useState<User | null>(null);
+  const [isLoading, setIsLoading] = useState(true);
+
+  const fetchUserProfile = async (userId: string) => {
     const { data, error } = await supabase
       .from("users")
-      .select("*")
+      .select("id, name, email, role")
       .eq("id", userId)
       .single();
 
-    if (!error && data) {
-      setUser(data); // contains id, name, email, role
-    }
+    if (data && !error) setUser(data);
+    else setUser(null);
+    setIsLoading(false);
   };
 
   useEffect(() => {
-    // On initial load
     supabase.auth.getSession().then(({ data: { session } }) => {
-      if (session?.user) {
-        fetchUserProfile(session.user.id);
-      }
+      if (session?.user) fetchUserProfile(session.user.id);
+      else setIsLoading(false);
     });
 
-    // Listen for login/logout changes
-    const { data: listener } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
-        if (session?.user) {
-          fetchUserProfile(session.user.id);
-        } else {
-          setUser(null);
-        }
+    const { data: listener } = supabase.auth.onAuthStateChange((_event, session) => {
+      if (session?.user) fetchUserProfile(session.user.id);
+      else {
+        setUser(null);
+        setIsLoading(false);
       }
-    );
+    });
 
     return () => {
       listener.subscription.unsubscribe();
     };
   }, []);
 
+  const logout = async () => {
+    await supabase.auth.signOut();
+    setUser(null);
+  };
+
   return (
-    <AuthContext.Provider value={{ user }}>
+    <AuthContext.Provider value={{ user, isLoading, logout }}>
       {children}
     </AuthContext.Provider>
   );
 };
 
-export const useAuth = () => useContext(AuthContext);
+export const useAuth = () => {
+  const context = useContext(AuthContext);
+  if (!context) throw new Error("useAuth must be used within AuthProvider");
+  return context;
+};

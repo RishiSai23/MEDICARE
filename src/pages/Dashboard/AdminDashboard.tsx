@@ -1,18 +1,35 @@
+import { useNavigate } from "react-router-dom";
+import { supabase } from "@/lib/supabaseClient";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 
 const AdminDashboard = () => {
   const { user } = useAuth();
+  const navigate = useNavigate();
+
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/login");
+  };
 
   return (
     <div className="min-h-screen bg-hospital-light">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-hospital-primary mb-4">
-            Admin Dashboard
-          </h1>
-          <p className="text-xl text-gray-600">Welcome, {user?.name} - System Administrator</p>
+        {/* Header with Logout */}
+        <div className="flex justify-between items-center mb-8">
+          <div>
+            <h1 className="text-4xl font-bold text-hospital-primary mb-2">Admin Dashboard</h1>
+            <p className="text-xl text-gray-600">
+              Welcome, {user?.name} - System Administrator
+            </p>
+          </div>
+          <Button
+            onClick={handleLogout}
+            className="bg-red-600 hover:bg-red-700 text-white"
+          >
+            Logout
+          </Button>
         </div>
 
         {/* Stats Overview */}
@@ -43,6 +60,7 @@ const AdminDashboard = () => {
           </Card>
         </div>
 
+        {/* Management, Reports & Actions */}
         <div className="grid lg:grid-cols-3 gap-6">
           {/* System Management */}
           <Card>
@@ -86,7 +104,7 @@ const AdminDashboard = () => {
             </CardContent>
           </Card>
 
-          {/* Quick Actions */}
+          {/* Emergency Actions */}
           <Card>
             <CardHeader>
               <CardTitle className="text-hospital-primary">Emergency Actions</CardTitle>
@@ -108,7 +126,7 @@ const AdminDashboard = () => {
           </Card>
         </div>
 
-        {/* Recent System Activity */}
+        {/* Recent Activity */}
         <Card className="mt-6">
           <CardHeader>
             <CardTitle className="text-hospital-primary">Recent System Activity</CardTitle>

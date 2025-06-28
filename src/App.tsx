@@ -7,12 +7,12 @@ import {
   useLocation,
 } from "react-router-dom";
 
-// UI
-import { Toaster as Sonner } from "@/components/ui/sonner";
-import { Toaster } from "@/components/ui/toaster";
-import { TooltipProvider } from "@/components/ui/tooltip";
+// UI Components
+import { Toaster as Sonner } from "./components/ui/sonner";
+import { Toaster } from "./components/ui/toaster";
+import { TooltipProvider } from "./components/ui/tooltip";
 
-// Layout
+// Layout Components
 import Footer from "./components/Footer";
 import Navbar from "./components/Navbar";
 import PrivateRoute from "./components/PrivateRoute";
@@ -22,15 +22,16 @@ import { AuthProvider, useAuth } from "./contexts/AuthContext";
 
 // Pages
 import MainPage from "./components/MainPage";
+import AppointmentForm from "./pages/AppointmentForm";
 import Blog from "./pages/Blog";
 import Chatbots from "./pages/Chatbots";
 import AdminDashboard from "./pages/Dashboard/AdminDashboard";
 import DoctorDashboard from "./pages/Dashboard/DoctorDashboard";
 import PatientDashboard from "./pages/Dashboard/PatientDashboard";
 import Doctors from "./pages/Doctors";
+import DoctorsDetails from "./pages/DoctorsDetails"; // ✅ Doctor Details Page with :id
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
-import AppointmentForm from "./pages/AppointmentForm";
 
 const queryClient = new QueryClient();
 
@@ -41,7 +42,7 @@ const RoleBasedRedirect = () => {
   return <Navigate to={`/dashboard/${user.role}`} replace />;
 };
 
-// ✅ Layout wrapper to conditionally hide Navbar/Footer
+// ✅ Layout wrapper to hide Navbar/Footer for dashboards
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const isDashboard = location.pathname.startsWith("/dashboard");
@@ -72,6 +73,9 @@ const App = () => (
               <Route path="/blog" element={<Blog />} />
               <Route path="/chatbots" element={<Chatbots />} />
               <Route path="/doctors" element={<Doctors />} />
+
+              {/* ✅ Dynamic Doctor Details Page */}
+              <Route path="/doctors-details/:id" element={<DoctorsDetails />} />
 
               {/* ✅ Appointment Page */}
               <Route path="/appointment" element={<AppointmentForm />} />

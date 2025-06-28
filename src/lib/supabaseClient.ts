@@ -1,7 +1,7 @@
-import { createClient } from '@supabase/supabase-js';
+// src/supabase/supabaseClient.ts
+import { createClient } from "@supabase/supabase-js";
 
-// 🔐 Replace these with your actual keys from Supabase > Project > Settings > API
-const supabaseUrl = 'https://icudwjspgmthgrjrldxg.supabase.co';
-const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImljdWR3anNwZ210aGdyanJsZHhnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTA4MjYwNjMsImV4cCI6MjA2NjQwMjA2M30.M008pjx7hnw_ABv3McoMsz0bUtPej8nuQcbm9WZv3ho';
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL!;
+const supabaseKey = import.meta.env.VITE_SUPABASE_ANON_KEY!;
 
-export const supabase = createClient(supabaseUrl, supabaseAnonKey);
+export const supabase = createClient(supabaseUrl, supabaseKey);

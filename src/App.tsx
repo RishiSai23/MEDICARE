@@ -29,21 +29,22 @@ import AdminDashboard from "./pages/Dashboard/AdminDashboard";
 import DoctorDashboard from "./pages/Dashboard/DoctorDashboard";
 import PatientDashboard from "./pages/Dashboard/PatientDashboard";
 import Doctors from "./pages/Doctors";
-import DoctorsDetails from "./pages/DoctorsDetails"; // ✅ Doctor Details Page with :id
+import DoctorsDetails from "./pages/DoctorsDetails";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
+// Initialize Query Client
 const queryClient = new QueryClient();
 
-// ✅ Role-based redirect logic for /dashboard
+// ✅ Role-Based Redirect Component
 const RoleBasedRedirect = () => {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
   return <Navigate to={`/dashboard/${user.role}`} replace />;
 };
 
-// ✅ Layout wrapper to hide Navbar/Footer for dashboards
-const AppLayout = ({ children }: { children: React.ReactNode }) => {
+// ✅ Layout Component
+const AppLayout = ({ children }) => {
   const location = useLocation();
   const isDashboard = location.pathname.startsWith("/dashboard");
 
@@ -56,81 +57,103 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-const App = () => (
-  <QueryClientProvider client={queryClient}>
-    <TooltipProvider>
-      <Toaster />
-      <Sonner />
-      <AuthProvider>
-        <BrowserRouter>
-          <AppLayout>
-            <Routes>
-              {/* ✅ Landing Page */}
-              <Route path="/" element={<MainPage />} />
+// ✅ Main App Component
+const App = () => {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <TooltipProvider>
+        <Toaster />
+        <Sonner />
+        <AuthProvider>
+          <BrowserRouter>
+            <AppLayout>
+              <Routes>
+                {/* Public Pages */}
+                <Route path="/" element={<MainPage />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/blog" element={<Blog />} />
+                <Route path="/chatbots" element={<Chatbots />} />
+                <Route path="/doctors" element={<Doctors />} />
+                <Route
+                  path="/doctors-details/:id"
+                  element={<DoctorsDetails />}
+                />
+                <Route path="/appointment" element={<AppointmentForm />} />
 
-              {/* ✅ Public Pages */}
-              <Route path="/login" element={<Login />} />
-              <Route path="/blog" element={<Blog />} />
-              <Route path="/chatbots" element={<Chatbots />} />
-              <Route path="/doctors" element={<Doctors />} />
+                {/* Chatbot Sub-Pages */}
+                <Route
+                  path="/chatbots/symptom-checker"
+                  element={<div>Symptom Checker Coming Soon</div>}
+                />
+                <Route
+                  path="/chatbots/mental-health"
+                  element={<div>Mental Health Bot Coming Soon</div>}
+                />
+                <Route
+                  path="/chatbots/recovery-tracker"
+                  element={<div>Recovery Tracker Coming Soon</div>}
+                />
 
-              {/* ✅ Dynamic Doctor Details Page */}
-              <Route path="/doctors-details/:id" element={<DoctorsDetails />} />
+                {/* Dashboard Redirect */}
+                <Route path="/dashboard" element={<RoleBasedRedirect />} />
 
-              {/* ✅ Appointment Page */}
-              <Route path="/appointment" element={<AppointmentForm />} />
+                {/* Protected Dashboard Routes */}
+                <Route
+                  path="/dashboard/patient"
+                  element={
+                    <PrivateRoute requiredRole="patient">
+                      <PatientDashboard />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/dashboard/doctor"
+                  element={
+                    <PrivateRoute requiredRole="doctor">
+                      <DoctorDashboard />
+                    </PrivateRoute>
+                  }
+                />
+                <Route
+                  path="/dashboard/admin"
+                  element={
+                    <PrivateRoute requiredRole="admin">
+                      <AdminDashboard />
+                    </PrivateRoute>
+                  }
+                />
 
-              {/* ✅ Chatbots Subpages */}
-              <Route
-                path="/chatbots/symptom-checker"
-                element={<div>Symptom Checker Coming Soon</div>}
-              />
-              <Route
-                path="/chatbots/mental-health"
-                element={<div>Mental Health Bot Coming Soon</div>}
-              />
-              <Route
-                path="/chatbots/recovery-tracker"
-                element={<div>Recovery Tracker Coming Soon</div>}
-              />
+                {/* Not Found */}
+                <Route path="*" element={<NotFound />} />
+              </Routes>
+            </AppLayout>
+          </BrowserRouter>
+        </AuthProvider>
+      </TooltipProvider>
+    </QueryClientProvider>
+  );
+};
 
-              {/* ✅ Dashboard Role-Based Redirect */}
-              <Route path="/dashboard" element={<RoleBasedRedirect />} />
-
-              {/* ✅ Protected Dashboards */}
-              <Route
-                path="/dashboard/patient"
-                element={
-                  <PrivateRoute requiredRole="patient">
-                    <PatientDashboard />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/dashboard/doctor"
-                element={
-                  <PrivateRoute requiredRole="doctor">
-                    <DoctorDashboard />
-                  </PrivateRoute>
-                }
-              />
-              <Route
-                path="/dashboard/admin"
-                element={
-                  <PrivateRoute requiredRole="admin">
-                    <AdminDashboard />
-                  </PrivateRoute>
-                }
-              />
-
-              {/* ✅ Not Found */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </AppLayout>
-        </BrowserRouter>
-      </AuthProvider>
-    </TooltipProvider>
-  </QueryClientProvider>
-);
+// const App = () => {
+//   return (
+//     <QueryClientProvider client={queryClient}>
+//       <TooltipProvider>
+//         <Toaster />
+//         <Sonner />
+//         <AuthProvider>
+//           <BrowserRouter>
+//             <AppLayout>
+//               <Routes>
+//                 <Route path="/" element={<div>✅ It Renders</div>} />
+//                 <Route path="/login" element={<Login />} />
+//                 <Route path="*" element={<NotFound />} />
+//               </Routes>
+//             </AppLayout>
+//           </BrowserRouter>
+//         </AuthProvider>
+//       </TooltipProvider>
+//     </QueryClientProvider>
+//   );
+// };
 
 export default App;

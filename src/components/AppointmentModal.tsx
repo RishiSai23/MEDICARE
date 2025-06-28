@@ -26,6 +26,7 @@ const AppointmentModal = ({
               <X className="w-5 h-5" />
             </Button>
           </div>
+
           <p className="text-sm text-gray-600 dark:text-gray-300">
             {doctor.specialty}
           </p>
@@ -67,3 +68,4 @@ const AppointmentModal = ({
 };
 
 export default AppointmentModal;
+//just a test on whether where i am currently in

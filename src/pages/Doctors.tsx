@@ -1,215 +1,272 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
-import { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom"; // ✅ Added
+import { Dialog, DialogContent, DialogHeader } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Moon, Star, Sun, X } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+import "./Doctors.css"; // Import custom CSS for marquee
 
 const Doctors = () => {
-  const navigate = useNavigate(); // ✅ Hook to navigate programmatically
-
-  const doctors = [
-    {
-      id: 1,
-      name: "Dr. Sarah Johnson",
-      specialty: "Cardiology",
-      image:
-        "https://images.unsplash.com/photo-1559839734-2b71ea197ec2?w=300&h=300&fit=crop&crop=face",
-      experience: "15 years",
-      education: "Harvard Medical School",
-      description:
-        "Specializes in interventional cardiology and heart disease prevention.",
-    },
-    {
-      id: 2,
-      name: "Dr. Michael Chen",
-      specialty: "Neurology",
-      image:
-        "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?w=300&h=300&fit=crop&crop=face",
-      experience: "12 years",
-      education: "Johns Hopkins University",
-      description:
-        "Expert in treating neurological disorders and brain injuries.",
-    },
-    {
-      id: 3,
-      name: "Dr. Emily Rodriguez",
-      specialty: "Pediatrics",
-      image:
-        "https://mortensondental.com/wp-content/uploads/2021/02/Emily_Powell.jpg",
-      experience: "10 years",
-      education: "Stanford Medical School",
-      description:
-        "Dedicated to providing comprehensive care for children and adolescents.",
-    },
-    {
-      id: 4,
-      name: "Dr. James Wilson",
-      specialty: "Orthopedics",
-      image:
-        "https://images.unsplash.com/photo-1622253692010-333f2da6031d?w=300&h=300&fit=crop&crop=face",
-      experience: "18 years",
-      education: "Mayo Clinic College",
-      description:
-        "Specializes in sports medicine and joint replacement surgery.",
-    },
-    {
-      id: 5,
-      name: "Dr. Lisa Thompson",
-      specialty: "Dermatology",
-      image:
-        "https://images.unsplash.com/photo-1527613426441-4da17471b66d?w=300&h=300&fit=crop&crop=face",
-      experience: "8 years",
-      education: "UCLA Medical School",
-      description:
-        "Expert in skin cancer detection and cosmetic dermatology.",
-    },
-    {
-      id: 6,
-      name: "Dr. Robert Kumar",
-      specialty: "Emergency Medicine",
-      image:
-        "https://images.unsplash.com/photo-1582750433449-648ed127bb54?w=300&h=300&fit=crop&crop=face",
-      experience: "14 years",
-      education: "University of Pennsylvania",
-      description:
-        "Board-certified in emergency medicine and trauma care.",
-    },
-  ];
-
-  const sliderRef = useRef<HTMLDivElement>(null);
-  const [currentIndex, setCurrentIndex] = useState(0);
-  const [filter, setFilter] = useState("");
+  const navigate = useNavigate();
+  const [search, setSearch] = useState("");
+  const [selectedDoctor, setSelectedDoctor] = useState<any>(null);
+  const [doctors, setDoctors] = useState<any[]>([]);
+  const [darkMode, setDarkMode] = useState(false);
 
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prevIndex) => (prevIndex + 1) % doctors.length);
-    }, 3000);
-    return () => clearInterval(interval);
-  }, [doctors.length]);
+    fetchDoctors();
+  }, []);
 
-  useEffect(() => {
-    if (sliderRef.current) {
-      sliderRef.current.scrollTo({
-        left: currentIndex * 320,
-        behavior: "smooth",
-      });
-    }
-  }, [currentIndex]);
+  const fetchDoctors = async () => {
+    const specialties = ["Cardiology", "Neurology", "Pediatrics", "Orthopedics", "Dermatology"];
+    const sampleDoctors = [
+      {
+        name: "Dr. Ayesha Siddiqui",
+        image: "https://randomuser.me/api/portraits/women/65.jpg",
+        experience: "15 years",
+        education: "Harvard Medical School",
+        description: "Specializes in interventional cardiology and heart disease prevention.",
+        rating: 4.9,
+        location: "Jaipur, India",
+        availability: "Mon - Thu, 8 AM - 12 PM"
+      },
+      {
+        name: "Dr. Arjun Patel",
+        image: "https://randomuser.me/api/portraits/men/64.jpg",
+        experience: "12 years",
+        education: "Johns Hopkins University",
+        description: "Expert in treating neurological disorders and brain injuries.",
+        rating: 4.7,
+        location: "Chennai, India",
+        availability: "Mon - Fri, 10 AM - 4 PM"
+      },
+      {
+        name: "Dr. Priya Menon",
+        image: "https://randomuser.me/api/portraits/women/58.jpg",
+        experience: "10 years",
+        education: "Stanford Medical School",
+        description: "Dedicated to providing comprehensive care for children and adolescents.",
+        rating: 4.8,
+        location: "Mumbai, India",
+        availability: "Tue - Sat, 11 AM - 5 PM"
+      },
+      {
+        name: "Dr. Karan Verma",
+        image: "https://randomuser.me/api/portraits/men/61.jpg",
+        experience: "18 years",
+        education: "Mayo Clinic College",
+        description: "Specializes in sports medicine and joint replacement surgery.",
+        rating: 4.6,
+        location: "Bangalore, India",
+        availability: "Mon - Thu, 9 AM - 3 PM"
+      },
+      {
+        name: "Dr. Sneha Rao",
+        image: "https://randomuser.me/api/portraits/women/50.jpg",
+        experience: "8 years",
+        education: "UCLA Medical School",
+        description: "Expert in skin cancer detection and cosmetic dermatology.",
+        rating: 4.5,
+        location: "Pune, India",
+        availability: "Tue - Sat, 12 PM - 6 PM"
+      },
+      {
+        name: "Dr. Rohan Mehra",
+        image: "https://randomuser.me/api/portraits/men/52.jpg",
+        experience: "11 years",
+        education: "NYU School of Medicine",
+        description: "Focused on heart failure and cardiac imaging.",
+        rating: 4.6,
+        location: "Kolkata, India",
+        availability: "Wed - Sun, 3 PM - 9 PM"
+      },
+      {
+        name: "Dr. Alisha Jain",
+        image: "https://randomuser.me/api/portraits/women/45.jpg",
+        experience: "9 years",
+        education: "Yale School of Medicine",
+        description: "Special interest in pediatric neurology.",
+        rating: 4.7,
+        location: "Surat, India",
+        availability: "Tue - Sat, 10 AM - 4 PM"
+      },
+      {
+        name: "Dr. Dev Shah",
+        image: "https://randomuser.me/api/portraits/men/46.jpg",
+        experience: "13 years",
+        education: "Cleveland Clinic Lerner College",
+        description: "Focused on orthopedic trauma and bone health.",
+        rating: 4.6,
+        location: "Jaipur, India",
+        availability: "Mon - Thu, 8 AM - 12 PM"
+      },
+      {
+        name: "Dr. Isha Kapoor",
+        image: "https://randomuser.me/api/portraits/women/43.jpg",
+        experience: "7 years",
+        education: "Duke University School of Medicine",
+        description: "Provides dermatological care for complex skin conditions.",
+        rating: 4.5,
+        location: "Kolkata, India",
+        availability: "Wed - Sun, 3 PM - 9 PM"
+      },
+      {
+        name: "Dr. Aman Bhatia",
+        image: "https://randomuser.me/api/portraits/men/40.jpg",
+        experience: "14 years",
+        education: "Mount Sinai School of Medicine",
+        description: "Specializes in pediatric development and behavioral health.",
+        rating: 4.8,
+        location: "Ahmedabad, India",
+        availability: "Mon - Fri, 9 AM - 1 PM"
+      }
+    ];
 
-  const filteredDoctors = filter
-    ? doctors.filter((doc) => doc.specialty === filter)
-    : doctors;
+    const extendedDoctors = specialties.flatMap((specialty, sIndex) =>
+      Array.from({ length: 5 }).map((_, i) => ({
+        id: sIndex * 10 + i + 1,
+        name: `Dr. ${specialty} ${i + 1}`,
+        specialty,
+        ...sampleDoctors[(sIndex + i) % sampleDoctors.length],
+      }))
+    );
+
+    setDoctors(extendedDoctors);
+  };
+
+  const filteredDoctors = doctors.filter((doc) =>
+    doc.name.toLowerCase().includes(search.toLowerCase()) ||
+    doc.specialty.toLowerCase().includes(search.toLowerCase())
+  );
+
+  const groupedDoctors = filteredDoctors.reduce((acc, doc) => {
+    if (!acc[doc.specialty]) acc[doc.specialty] = [];
+    acc[doc.specialty].push(doc);
+    return acc;
+  }, {} as Record<string, any[]>);
 
   return (
-    <div className="min-h-screen bg-hospital-light">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="text-center mb-12">
-          <h1 className="text-4xl font-bold text-hospital-primary mb-4">
-            Our Medical Team
-          </h1>
-          <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-            Meet our dedicated team of healthcare professionals committed to
-            providing exceptional medical care with expertise, compassion, and
-            the latest medical technologies.
-          </p>
-        </div>
+    <div className={`space-y-16 p-6 min-h-screen transition-colors duration-300 ${darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}>
+      <div className="flex justify-between items-center mb-6 max-w-6xl mx-auto">
+        <Input
+          placeholder="Search by doctor name or specialty..."
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+          className="border border-gray-300 focus:border-blue-500 bg-white/80 backdrop-blur-sm shadow-lg"
+        />
+        <Button onClick={() => setDarkMode(!darkMode)} className="ml-4">
+          {darkMode ? <Sun className="w-5 h-5" /> : <Moon className="w-5 h-5" />}
+        </Button>
+      </div>
 
-        {/* Specialty Filter Dropdown */}
-        <div className="mb-8 text-center">
-          <label className="text-hospital-primary font-semibold mr-2">
-            Filter by Specialty:
-          </label>
-          <select
-            className="px-4 py-2 rounded-md border border-hospital-secondary text-hospital-primary"
-            value={filter}
-            onChange={(e) => setFilter(e.target.value)}
-          >
-            <option value="">All</option>
-            {[...new Set(doctors.map((doc) => doc.specialty))].map((spec) => (
-              <option key={spec} value={spec}>
-                {spec}
-              </option>
-            ))}
-          </select>
-        </div>
-
-        {/* Auto-Scrolling Doctor Slider */}
-        <div
-          ref={sliderRef}
-          className="flex overflow-x-auto space-x-6 py-4 px-1 scroll-smooth scrollbar-hide"
-        >
-          {filteredDoctors.map((doctor) => (
-            <Card
-              key={doctor.id}
-              className="min-w-[300px] max-w-xs flex-shrink-0 bg-white rounded-xl shadow-md hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-            >
-              <CardContent className="p-6">
-                <div className="text-center mb-4">
-                  <img
-                    src={doctor.image}
-                    alt={doctor.name}
-                    className="w-28 h-28 rounded-full mx-auto object-cover shadow-md mb-3 border-2 border-hospital-accent"
-                  />
-                  <h3 className="text-lg font-bold text-hospital-primary mb-1">
-                    {doctor.name}
-                  </h3>
-                  <p className="text-hospital-accent font-medium">
-                    {doctor.specialty}
-                  </p>
-                </div>
-                <div className="text-sm text-gray-600 space-y-2">
-                  <p>
-                    <strong>Experience:</strong> {doctor.experience}
-                  </p>
-                  <p>
-                    <strong>Education:</strong> {doctor.education}
-                  </p>
-                  <p>{doctor.description}</p>
-                </div>
-                <div className="mt-4 space-y-2">
-                  <Button
-                    onClick={() => navigate("/appointment")}
-                    className="w-full bg-hospital-primary hover:bg-hospital-dark text-white"
-                  >
-                    Book Appointment
-                  </Button>
-                  <Button
-                    variant="outline"
-                    className="w-full border-hospital-accent text-hospital-accent hover:bg-hospital-accent hover:text-white"
-                  >
-                    View Profile
-                  </Button>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Call to Action */}
-        <div className="mt-16 text-center bg-white rounded-lg shadow-lg p-8">
-          <h2 className="text-3xl font-bold text-hospital-primary mb-4">
-            Ready to Schedule an Appointment?
+      {Object.entries(groupedDoctors).map(([specialty, docs]) => (
+        <div key={specialty} className="max-w-6xl mx-auto">
+          <h2 className="text-4xl font-extrabold mb-4 text-hospital-primary border-b pb-2 border-hospital-accent drop-shadow-md">
+            {specialty}
           </h2>
-          <p className="text-gray-600 mb-6 max-w-2xl mx-auto">
-            Our medical team is here to provide you with the best healthcare
-            experience. Contact us today to book your appointment with one of
-            our specialists.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center">
-            <Button
-              onClick={() => navigate("/appointment")}
-              className="bg-hospital-accent hover:bg-yellow-500 text-hospital-primary font-semibold"
+          <div className="overflow-hidden relative">
+            <div
+              className="marquee-track flex gap-6 whitespace-nowrap"
+              style={{ animationDuration: `${docs.length * 5}s` }}
             >
-              Book Online
-            </Button>
-            <Button
-              variant="outline"
-              className="border-hospital-primary text-hospital-primary hover:bg-hospital-primary hover:text-white"
-            >
-              Call (555) 123-4567
-            </Button>
+              {[...docs, ...docs].map((doctor, index) => (
+                <Card
+                  key={`${doctor.id}-${index}`}
+                  className="w-[300px] bg-white/90 dark:bg-white/10 rounded-xl shadow-xl hover:shadow-2xl transform transition duration-500 hover:-translate-y-1 cursor-pointer backdrop-blur-md"
+                  onClick={() => setSelectedDoctor(doctor)}
+                >
+                  <CardContent className="p-6">
+                    <div className="text-center mb-4">
+                      <img
+                        src={doctor.image}
+                        alt={doctor.name}
+                        className="w-24 h-24 rounded-full mx-auto object-cover border-2 border-hospital-accent shadow-md"
+                      />
+                      <h3 className="text-lg font-bold text-hospital-primary mt-2">
+                        {doctor.name}
+                      </h3>
+                      <p className="text-hospital-accent text-sm">{doctor.specialty}</p>
+                    </div>
+                    <div className="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                      <p><strong>Experience:</strong> {doctor.experience}</p>
+                      <p><strong>Education:</strong> {doctor.education}</p>
+                      <p className="line-clamp-3">{doctor.description}</p>
+                      <p><strong>Availability:</strong> {doctor.availability}</p>
+                    </div>
+                    <div className="flex items-center gap-1 text-yellow-500 mt-2">
+                      {[...Array(Math.round(doctor.rating))].map((_, i) => (
+                        <Star key={i} className="w-4 h-4 fill-yellow-500" />
+                      ))}
+                      <span className="text-xs text-gray-600 dark:text-gray-400">({doctor.rating})</span>
+                    </div>
+                    <div className="mt-4 flex flex-col gap-2">
+                      <Button
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          navigate("/appointment");
+                        }}
+                        className="w-full bg-hospital-primary hover:bg-hospital-dark text-white"
+                      >
+                        Book Appointment
+                      </Button>
+                      <Button
+                        variant="outline"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setSelectedDoctor(doctor);
+                        }}
+                        className="w-full border-hospital-accent text-hospital-accent hover:bg-hospital-accent hover:text-white"
+                      >
+                        View Profile
+                      </Button>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
           </div>
         </div>
-      </div>
+      ))}
+
+      <Dialog open={!!selectedDoctor} onOpenChange={() => setSelectedDoctor(null)}>
+        {selectedDoctor && (
+          <DialogContent className="max-w-md bg-white/90 dark:bg-gray-800 backdrop-blur-md">
+            <DialogHeader>
+              <div className="flex justify-between items-center">
+                <h3 className="text-xl font-semibold text-hospital-primary">
+                  {selectedDoctor.name}
+                </h3>
+                <Button variant="ghost" onClick={() => setSelectedDoctor(null)}>
+                  <X className="w-5 h-5" />
+                </Button>
+              </div>
+              <p className="text-sm text-gray-600 dark:text-gray-300">{selectedDoctor.specialty}</p>
+            </DialogHeader>
+            <div className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+              <img
+                src={selectedDoctor.image}
+                alt={selectedDoctor.name}
+                className="w-28 h-28 rounded-full mx-auto object-cover border-2 border-hospital-accent"
+              />
+              <p><strong>Experience:</strong> {selectedDoctor.experience}</p>
+              <p><strong>Education:</strong> {selectedDoctor.education}</p>
+              <p>{selectedDoctor.description}</p>
+              <div className="flex items-center gap-1 text-yellow-500">
+                {[...Array(Math.round(selectedDoctor.rating))].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-yellow-500" />
+                ))}
+                <span className="text-xs text-gray-600 dark:text-gray-400">({selectedDoctor.rating})</span>
+              </div>
+              <p><strong>Availability:</strong> {selectedDoctor.availability}</p>
+              <p><strong>Location:</strong> {selectedDoctor.location}</p>
+              <Button className="w-full mt-4 bg-hospital-primary hover:bg-hospital-dark text-white">
+                Book Now
+              </Button>
+            </div>
+          </DialogContent>
+        )}
+      </Dialog>
     </div>
   );
 };

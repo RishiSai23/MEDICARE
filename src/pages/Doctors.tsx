@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Moon, Star, Sun, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./Doctors.css"; // Import custom CSS for marquee
+import "./Doctors.css";
 
 const Doctors = () => {
   const navigate = useNavigate();
@@ -120,6 +120,106 @@ const Doctors = () => {
         rating: 4.8,
         location: "Ahmedabad, India",
         availability: "Mon - Fri, 9 AM - 1 PM"
+      },
+      {
+        name: "Dr. Meena Krishnan",
+        image: "https://randomuser.me/api/portraits/women/21.jpg",
+        experience: "16 years",
+        education: "AIIMS Delhi",
+        description: "Cardiology expert with a focus on preventive care.",
+        rating: 4.8,
+        location: "Delhi, India",
+        availability: "Mon - Thu, 8 AM - 12 PM"
+      },
+      {
+        name: "Dr. Ravi Shankar",
+        image: "https://randomuser.me/api/portraits/men/22.jpg",
+        experience: "14 years",
+        education: "CMC Vellore",
+        description: "Neurologist specializing in stroke and seizures.",
+        rating: 4.6,
+        location: "Bangalore, India",
+        availability: "Tue - Fri, 9 AM - 1 PM"
+      },
+      {
+        name: "Dr. Aarti Nair",
+        image: "https://randomuser.me/api/portraits/women/23.jpg",
+        experience: "11 years",
+        education: "JIPMER Puducherry",
+        description: "Pediatrician with deep care for children’s health.",
+        rating: 4.9,
+        location: "Mumbai, India",
+        availability: "Wed - Sat, 10 AM - 2 PM"
+      },
+      {
+        name: "Dr. Vikram Desai",
+        image: "https://randomuser.me/api/portraits/men/24.jpg",
+        experience: "17 years",
+        education: "KEM Hospital",
+        description: "Orthopedic surgeon expert in bone and joint care.",
+        rating: 4.7,
+        location: "Chennai, India",
+        availability: "Mon - Fri, 10 AM - 4 PM"
+      },
+      {
+        name: "Dr. Kavita Rao",
+        image: "https://randomuser.me/api/portraits/women/25.jpg",
+        experience: "10 years",
+        education: "NIMHANS",
+        description: "Renowned dermatologist with specialization in skin therapy.",
+        rating: 4.5,
+        location: "Hyderabad, India",
+        availability: "Tue - Sat, 12 PM - 5 PM"
+      },
+      {
+        name: "Dr. Imran Sheikh",
+        image: "https://randomuser.me/api/portraits/men/26.jpg",
+        experience: "9 years",
+        education: "PGI Chandigarh",
+        description: "Advanced heart disease specialist.",
+        rating: 4.7,
+        location: "Ahmedabad, India",
+        availability: "Wed - Sat, 9 AM - 1 PM"
+      },
+      {
+        name: "Dr. Latha Suresh",
+        image: "https://randomuser.me/api/portraits/women/27.jpg",
+        experience: "13 years",
+        education: "RGUHS Bangalore",
+        description: "Neurosurgeon with deep skill in complex cases.",
+        rating: 4.6,
+        location: "Kochi, India",
+        availability: "Mon - Thu, 10 AM - 3 PM"
+      },
+      {
+        name: "Dr. Pranav Mishra",
+        image: "https://randomuser.me/api/portraits/men/28.jpg",
+        experience: "12 years",
+        education: "Grant Medical College",
+        description: "Pediatrician with child behavioral expertise.",
+        rating: 4.8,
+        location: "Indore, India",
+        availability: "Tue - Fri, 11 AM - 5 PM"
+      },
+      {
+        name: "Dr. Nisha Thakur",
+        image: "https://randomuser.me/api/portraits/women/29.jpg",
+        experience: "10 years",
+        education: "AFMC Pune",
+        description: "Dermatology expert with cosmetic dermatology focus.",
+        rating: 4.6,
+        location: "Nagpur, India",
+        availability: "Mon - Fri, 1 PM - 6 PM"
+      },
+      {
+        name: "Dr. Anirudh Reddy",
+        image: "https://randomuser.me/api/portraits/men/30.jpg",
+        experience: "15 years",
+        education: "Osmania Medical College",
+        description: "Senior Orthopedic specialist with surgical experience.",
+        rating: 4.9,
+        location: "Vizag, India",
+        availability: "Tue - Sat, 8 AM - 12 PM"
       }
     ];
 
@@ -147,7 +247,7 @@ const Doctors = () => {
   }, {} as Record<string, any[]>);
 
   return (
-    <div className={`space-y-16 p-6 min-h-screen transition-colors duration-300 ${darkMode ? "bg-gray-900 text-white" : "bg-white text-gray-900"}`}>
+    <div className={`space-y-16 p-6 min-h-screen transition-colors duration-300 ${darkMode ? "bg-gray-900 text-yellow-400" : "bg-white text-hospital-primary"}`}>
       <div className="flex justify-between items-center mb-6 max-w-6xl mx-auto">
         <Input
           placeholder="Search by doctor name or specialty..."
@@ -162,7 +262,7 @@ const Doctors = () => {
 
       {Object.entries(groupedDoctors).map(([specialty, docs]) => (
         <div key={specialty} className="max-w-6xl mx-auto">
-          <h2 className="text-4xl font-extrabold mb-4 text-hospital-primary border-b pb-2 border-hospital-accent drop-shadow-md">
+          <h2 className="text-4xl font-extrabold mb-4 border-b pb-2 drop-shadow-md">
             {specialty}
           </h2>
           <div className="overflow-hidden relative">
@@ -183,12 +283,12 @@ const Doctors = () => {
                         alt={doctor.name}
                         className="w-24 h-24 rounded-full mx-auto object-cover border-2 border-hospital-accent shadow-md"
                       />
-                      <h3 className="text-lg font-bold text-hospital-primary mt-2">
+                      <h3 className="text-lg font-bold mt-2">
                         {doctor.name}
                       </h3>
-                      <p className="text-hospital-accent text-sm">{doctor.specialty}</p>
+                      <p className="text-sm">{doctor.specialty}</p>
                     </div>
-                    <div className="text-sm text-gray-700 dark:text-gray-300 space-y-1">
+                    <div className="text-sm space-y-1">
                       <p><strong>Experience:</strong> {doctor.experience}</p>
                       <p><strong>Education:</strong> {doctor.education}</p>
                       <p className="line-clamp-3">{doctor.description}</p>
@@ -198,7 +298,7 @@ const Doctors = () => {
                       {[...Array(Math.round(doctor.rating))].map((_, i) => (
                         <Star key={i} className="w-4 h-4 fill-yellow-500" />
                       ))}
-                      <span className="text-xs text-gray-600 dark:text-gray-400">({doctor.rating})</span>
+                      <span className="text-xs">({doctor.rating})</span>
                     </div>
                     <div className="mt-4 flex flex-col gap-2">
                       <Button
@@ -234,16 +334,16 @@ const Doctors = () => {
           <DialogContent className="max-w-md bg-white/90 dark:bg-gray-800 backdrop-blur-md">
             <DialogHeader>
               <div className="flex justify-between items-center">
-                <h3 className="text-xl font-semibold text-hospital-primary">
+                <h3 className="text-xl font-semibold">
                   {selectedDoctor.name}
                 </h3>
                 <Button variant="ghost" onClick={() => setSelectedDoctor(null)}>
                   <X className="w-5 h-5" />
                 </Button>
               </div>
-              <p className="text-sm text-gray-600 dark:text-gray-300">{selectedDoctor.specialty}</p>
+              <p className="text-sm">{selectedDoctor.specialty}</p>
             </DialogHeader>
-            <div className="space-y-2 text-sm text-gray-700 dark:text-gray-300">
+            <div className="space-y-2 text-sm">
               <img
                 src={selectedDoctor.image}
                 alt={selectedDoctor.name}
@@ -256,7 +356,7 @@ const Doctors = () => {
                 {[...Array(Math.round(selectedDoctor.rating))].map((_, i) => (
                   <Star key={i} className="w-4 h-4 fill-yellow-500" />
                 ))}
-                <span className="text-xs text-gray-600 dark:text-gray-400">({selectedDoctor.rating})</span>
+                <span className="text-xs">({selectedDoctor.rating})</span>
               </div>
               <p><strong>Availability:</strong> {selectedDoctor.availability}</p>
               <p><strong>Location:</strong> {selectedDoctor.location}</p>

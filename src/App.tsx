@@ -21,34 +21,35 @@ import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 
 // Pages
+import PatientsPage from "@/pages/Dashboard/PatientsPage";
 import MainPage from "./components/MainPage";
 import AppointmentForm from "./pages/AppointmentForm";
 import Blog from "./pages/Blog";
 import Chatbots from "./pages/Chatbots";
 import AdminDashboard from "./pages/Dashboard/AdminDashboard";
 import DoctorDashboard from "./pages/Dashboard/DoctorDashboard";
+import ManageDoctors from "./pages/Dashboard/ManageDoctors";
 import PatientDashboard from "./pages/Dashboard/PatientDashboard";
+import SettingsPage from "./pages/Dashboard/SettingsPage";
 import Doctors from "./pages/Doctors";
-import DoctorsDetails from "./pages/DoctorsDetails"; // ✅ Doctor Details Page with :id
+import DoctorsDetails from "./pages/DoctorsDetails";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
 
-// ✅ Role-based redirect logic for /dashboard
 const RoleBasedRedirect = () => {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
   return <Navigate to={`/dashboard/${user.role}`} replace />;
 };
 
-// ✅ Layout wrapper to hide Navbar/Footer for dashboards
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
   const location = useLocation();
   const isDashboard = location.pathname.startsWith("/dashboard");
 
   return (
-    <div className="min-h-screen flex flex-col bg-background text-foreground">
+    <div className={`min-h-screen flex flex-col ${isDashboard ? "bg-gray-900 text-yellow-400" : "bg-white text-blue-800"}`}>
       {!isDashboard && <Navbar />}
       <main className="flex-1">{children}</main>
       {!isDashboard && <Footer />}
@@ -65,22 +66,13 @@ const App = () => (
         <BrowserRouter>
           <AppLayout>
             <Routes>
-              {/* ✅ Landing Page */}
               <Route path="/" element={<MainPage />} />
-
-              {/* ✅ Public Pages */}
               <Route path="/login" element={<Login />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/chatbots" element={<Chatbots />} />
               <Route path="/doctors" element={<Doctors />} />
-
-              {/* ✅ Dynamic Doctor Details Page */}
               <Route path="/doctors-details/:id" element={<DoctorsDetails />} />
-
-              {/* ✅ Appointment Page */}
               <Route path="/appointment" element={<AppointmentForm />} />
-
-              {/* ✅ Chatbots Subpages */}
               <Route
                 path="/chatbots/symptom-checker"
                 element={<div>Symptom Checker Coming Soon</div>}
@@ -122,8 +114,25 @@ const App = () => (
                   </PrivateRoute>
                 }
               />
+              <Route
+  path="/dashboard/admin/settings"
+  element={
+    <PrivateRoute requiredRole="admin">
+      <SettingsPage />
+    </PrivateRoute>
+  }
+/>
+<Route path="/dashboard/admin/patients" element={<PatientsPage />} />
 
-              {/* ✅ Not Found */}
+              
+              <Route path="/dashboard/admin/manage-doctors" element={<ManageDoctors />} />
+              <Route
+  path="/dashboard/ManageDoctors"
+  element={<Navigate to="/dashboard/admin/manage-doctors" replace />}
+/>
+
+
+
               <Route path="*" element={<NotFound />} />
             </Routes>
           </AppLayout>

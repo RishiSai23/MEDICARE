@@ -1,10 +1,5 @@
 import { Button } from "@/components/ui/button";
-import {
-  Card,
-  CardContent,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
 import { supabase } from "@/lib/supabaseClient";
 import {
@@ -106,16 +101,24 @@ const AdminDashboard = () => {
 
         {/* Stats Overview */}
         <div className="grid lg:grid-cols-4 sm:grid-cols-2 gap-6 mb-10">
-          {[{ icon: <UserCircle />, label: "Total Patients", value: "1,247" },
+          {[
+            { icon: <UserCircle />, label: "Total Patients", value: "1,247" },
             { icon: <ShieldCheck />, label: "Active Doctors", value: "89" },
-            { icon: <ActivitySquare />, label: "Appointments Today", value: "156" },
-            { icon: <BarChart3 />, label: "System Uptime", value: "98.2%" }].map((item, idx) => (
+            {
+              icon: <ActivitySquare />,
+              label: "Appointments Today",
+              value: "156",
+            },
+            { icon: <BarChart3 />, label: "System Uptime", value: "98.2%" },
+          ].map((item, idx) => (
             <Card key={idx}>
               <CardContent className="p-6 text-center">
                 <div className="flex justify-center text-2xl mb-2 text-hospital-primary">
                   {item.icon}
                 </div>
-                <div className="text-3xl font-bold text-hospital-primary mb-1">{item.value}</div>
+                <div className="text-3xl font-bold text-hospital-primary mb-1">
+                  {item.value}
+                </div>
                 <div className="text-sm text-gray-600">{item.label}</div>
               </CardContent>
             </Card>
@@ -186,7 +189,9 @@ const AdminDashboard = () => {
               <Button variant="outline" className="w-full">
                 Performance Metrics
               </Button>
-              <Button variant="outline" className="w-full">Audit Logs</Button>
+              <Button variant="outline" className="w-full">
+                Audit Logs
+              </Button>
             </CardContent>
           </Card>
 
@@ -206,8 +211,12 @@ const AdminDashboard = () => {
               >
                 Emergency Shutdown
               </Button>
-              <Button variant="outline" className="w-full">Backup System</Button>
-              <Button variant="outline" className="w-full">Maintenance Mode</Button>
+              <Button variant="outline" className="w-full">
+                Backup System
+              </Button>
+              <Button variant="outline" className="w-full">
+                Maintenance Mode
+              </Button>
             </CardContent>
           </Card>
         </div>
@@ -250,7 +259,9 @@ const AdminDashboard = () => {
                   </p>
                   <p className="text-sm text-gray-600">30 minutes ago</p>
                 </div>
-                <Button variant="outline" size="sm">Review</Button>
+                <Button variant="outline" size="sm">
+                  Review
+                </Button>
               </div>
               <div className="flex justify-between items-center p-4 bg-hospital-light rounded">
                 <div>
@@ -259,7 +270,9 @@ const AdminDashboard = () => {
                   </p>
                   <p className="text-sm text-gray-600">2 hours ago</p>
                 </div>
-                <Button variant="outline" size="sm">View Log</Button>
+                <Button variant="outline" size="sm">
+                  View Log
+                </Button>
               </div>
               <div className="flex justify-between items-center p-4 bg-hospital-light rounded">
                 <div>
@@ -268,7 +281,9 @@ const AdminDashboard = () => {
                   </p>
                   <p className="text-sm text-gray-600">4 hours ago</p>
                 </div>
-                <Button variant="outline" size="sm">Details</Button>
+                <Button variant="outline" size="sm">
+                  Details
+                </Button>
               </div>
             </div>
           </CardContent>

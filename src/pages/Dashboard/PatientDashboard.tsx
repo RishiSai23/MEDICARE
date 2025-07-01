@@ -2,11 +2,47 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/contexts/AuthContext";
 
+import { supabase } from "@/lib/supabaseClient";
+import {
+  ActivitySquare,
+  BarChart3,
+  LogOut,
+  Search,
+  Settings2,
+  ShieldCheck,
+  Stethoscope,
+  UserCircle,
+  Users,
+} from "lucide-react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import {
+  Line,
+  LineChart,
+  ResponsiveContainer,
+  Tooltip,
+  XAxis,
+  YAxis,
+} from "recharts";
+
 const PatientDashboard = () => {
   const { user } = useAuth();
-
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    await supabase.auth.signOut();
+    navigate("/login");
+  };
   return (
     <div className="min-h-screen bg-hospital-light">
+      <div className="absolute top-4 right-4 flex items-center space-x-2">
+        <Button
+          onClick={handleLogout}
+          className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 flex items-center"
+        >
+          <LogOut className="mr-2 h-4 w-4" />
+          Logout
+        </Button>
+      </div>
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-hospital-primary mb-4">
@@ -19,17 +55,23 @@ const PatientDashboard = () => {
           {/* Appointments */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-hospital-primary">Upcoming Appointments</CardTitle>
+              <CardTitle className="text-hospital-primary">
+                Upcoming Appointments
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
                 <div className="p-3 border-l-4 border-hospital-accent bg-white rounded">
                   <p className="font-semibold">Dr. Sarah Johnson</p>
-                  <p className="text-sm text-gray-600">Cardiology - Dec 15, 2024 at 2:00 PM</p>
+                  <p className="text-sm text-gray-600">
+                    Cardiology - Dec 15, 2024 at 2:00 PM
+                  </p>
                 </div>
                 <div className="p-3 border-l-4 border-hospital-secondary bg-white rounded">
                   <p className="font-semibold">Dr. Michael Chen</p>
-                  <p className="text-sm text-gray-600">Neurology - Dec 20, 2024 at 10:30 AM</p>
+                  <p className="text-sm text-gray-600">
+                    Neurology - Dec 20, 2024 at 10:30 AM
+                  </p>
                 </div>
               </div>
               <Button className="w-full mt-4 bg-hospital-primary hover:bg-hospital-dark text-white">
@@ -41,7 +83,9 @@ const PatientDashboard = () => {
           {/* Medical Records */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-hospital-primary">Recent Medical Records</CardTitle>
+              <CardTitle className="text-hospital-primary">
+                Recent Medical Records
+              </CardTitle>
             </CardHeader>
             <CardContent>
               <div className="space-y-3">
@@ -63,7 +107,9 @@ const PatientDashboard = () => {
           {/* Quick Actions */}
           <Card>
             <CardHeader>
-              <CardTitle className="text-hospital-primary">Quick Actions</CardTitle>
+              <CardTitle className="text-hospital-primary">
+                Quick Actions
+              </CardTitle>
             </CardHeader>
             <CardContent className="space-y-3">
               <Button className="w-full bg-hospital-accent hover:bg-yellow-500 text-hospital-primary">
@@ -85,24 +131,34 @@ const PatientDashboard = () => {
         {/* Health Summary */}
         <Card className="mt-6">
           <CardHeader>
-            <CardTitle className="text-hospital-primary">Health Summary</CardTitle>
+            <CardTitle className="text-hospital-primary">
+              Health Summary
+            </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="grid md:grid-cols-4 gap-4">
               <div className="text-center p-4 bg-hospital-light rounded">
-                <div className="text-2xl font-bold text-hospital-primary">120/80</div>
+                <div className="text-2xl font-bold text-hospital-primary">
+                  120/80
+                </div>
                 <div className="text-sm text-gray-600">Blood Pressure</div>
               </div>
               <div className="text-center p-4 bg-hospital-light rounded">
-                <div className="text-2xl font-bold text-hospital-primary">72</div>
+                <div className="text-2xl font-bold text-hospital-primary">
+                  72
+                </div>
                 <div className="text-sm text-gray-600">Heart Rate</div>
               </div>
               <div className="text-center p-4 bg-hospital-light rounded">
-                <div className="text-2xl font-bold text-hospital-primary">98.6°F</div>
+                <div className="text-2xl font-bold text-hospital-primary">
+                  98.6°F
+                </div>
                 <div className="text-sm text-gray-600">Temperature</div>
               </div>
               <div className="text-center p-4 bg-hospital-light rounded">
-                <div className="text-2xl font-bold text-hospital-primary">A+</div>
+                <div className="text-2xl font-bold text-hospital-primary">
+                  A+
+                </div>
                 <div className="text-sm text-gray-600">Blood Type</div>
               </div>
             </div>

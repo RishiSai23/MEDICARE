@@ -1098,7 +1098,7 @@ const PatientDashboard = () => {
                 </div>
                 <div>
                   <span className="text-sm text-gray-500">Age:</span>
-                  <p className="font-medium">{user?.age || 32}</p>
+                  <p className="font-medium">{user?.age || 20}</p>
                 </div>
                 <div>
                   <span className="text-sm text-gray-500">Gender:</span>

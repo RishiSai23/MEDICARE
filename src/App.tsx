@@ -45,16 +45,16 @@ import NotFound from "./pages/NotFound";
 // Initialize Query Client
 const queryClient = new QueryClient();
 
+// ✅ Role-Based Redirect Component
 const RoleBasedRedirect = () => {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
   return <Navigate to={`/dashboard/${user.role}`} replace />;
 };
 
-const AppLayout = ({ children }: { children: React.ReactNode }) => {
-  const location = useLocation();
+// ✅ Layout Component
+const AppLayout = ({ children }) => {
   const isDashboard = location.pathname.startsWith("/dashboard");
-
   return (
     <div
       className={`min-h-screen flex flex-col ${

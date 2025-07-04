@@ -112,6 +112,7 @@ const App = () => (
 
               {/* ✅ Dashboard Role-Based Redirect */}
               <Route path="/dashboard" element={<RoleBasedRedirect />} />
+              <Route path="/patient-dashboard" element={<PatientDashboard />} />
 
               {/* ✅ Protected Dashboards */}
               <Route

@@ -6,6 +6,7 @@ import { Moon, Star, Sun, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "./Doctors.css";
+import AppointmentModal from "@/components/AppointmentModal";
 
 const Doctors = () => {
   const navigate = useNavigate();
@@ -160,7 +161,7 @@ const Doctors = () => {
         image: "https://randomuser.me/api/portraits/women/23.jpg",
         experience: "11 years",
         education: "JIPMER Puducherry",
-        description: "Pediatrician with deep care for children’s health.",
+        description: "Pediatrician with deep care for children's health.",
         rating: 4.9,
         location: "Mumbai, India",
         availability: "Wed - Sat, 10 AM - 2 PM",

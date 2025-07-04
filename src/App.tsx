@@ -42,31 +42,25 @@ import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 // Chatbot Pages
 
-
 // Initialize Query Client
 const queryClient = new QueryClient();
 
-<<<<<<< HEAD
-// ✅ Role-Based Redirect Component
-=======
->>>>>>> origin/main
 const RoleBasedRedirect = () => {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
   return <Navigate to={`/dashboard/${user.role}`} replace />;
 };
 
-<<<<<<< HEAD
-// ✅ Layout Component
-const AppLayout = ({ children }) => {
-=======
 const AppLayout = ({ children }: { children: React.ReactNode }) => {
->>>>>>> origin/main
   const location = useLocation();
   const isDashboard = location.pathname.startsWith("/dashboard");
 
   return (
-    <div className={`min-h-screen flex flex-col ${isDashboard ? "bg-gray-900 text-yellow-400" : "bg-white text-blue-800"}`}>
+    <div
+      className={`min-h-screen flex flex-col ${
+        isDashboard ? "bg-gray-900 text-yellow-400" : "bg-white text-blue-800"
+      }`}
+    >
       {!isDashboard && <Navbar />}
       <main className="flex-1">{children}</main>
       {!isDashboard && <Footer />}
@@ -74,106 +68,6 @@ const AppLayout = ({ children }: { children: React.ReactNode }) => {
   );
 };
 
-<<<<<<< HEAD
-// ✅ Main App Component
-const App = () => {
-  return (
-    <QueryClientProvider client={queryClient}>
-      <TooltipProvider>
-        <Toaster />
-        <Sonner />
-        <AuthProvider>
-          <BrowserRouter>
-            <AppLayout>
-              <Routes>
-                {/* Public Pages */}
-                <Route path="/" element={<MainPage />} />
-                <Route path="/login" element={<Login />} />
-                <Route path="/blog" element={<Blog />} />
-                <Route path="/chatbots" element={<Chatbots />} />
-                <Route path="/doctors" element={<Doctors />} />
-                <Route
-                  path="/doctors-details/:id"
-                  element={<DoctorsDetails />}
-                />
-                <Route path="/appointment" element={<AppointmentForm />} />
-
-                {/* Chatbot Sub-Pages */}
-                <Route
-                  path="/chatbots/symptom-checker"
-                  element={<div>Symptom Checker Coming Soon</div>}
-                />
-                <Route
-                  path="/chatbots/mental-health"
-                  element={<div>Mental Health Bot Coming Soon</div>}
-                />
-                <Route
-                  path="/chatbots/recovery-tracker"
-                  element={<div>Recovery Tracker Coming Soon</div>}
-                />
-
-                {/* Dashboard Redirect */}
-                <Route path="/dashboard" element={<RoleBasedRedirect />} />
-
-                {/* Protected Dashboard Routes */}
-                <Route
-                  path="/dashboard/patient"
-                  element={
-                    <PrivateRoute requiredRole="patient">
-                      <PatientDashboard />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/dashboard/doctor"
-                  element={
-                    <PrivateRoute requiredRole="doctor">
-                      <DoctorDashboard />
-                    </PrivateRoute>
-                  }
-                />
-                <Route
-                  path="/dashboard/admin"
-                  element={
-                    <PrivateRoute requiredRole="admin">
-                      <AdminDashboard />
-                    </PrivateRoute>
-                  }
-                />
-
-                {/* Not Found */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </AppLayout>
-          </BrowserRouter>
-        </AuthProvider>
-      </TooltipProvider>
-    </QueryClientProvider>
-  );
-};
-
-// const App = () => {
-//   return (
-//     <QueryClientProvider client={queryClient}>
-//       <TooltipProvider>
-//         <Toaster />
-//         <Sonner />
-//         <AuthProvider>
-//           <BrowserRouter>
-//             <AppLayout>
-//               <Routes>
-//                 <Route path="/" element={<div>✅ It Renders</div>} />
-//                 <Route path="/login" element={<Login />} />
-//                 <Route path="*" element={<NotFound />} />
-//               </Routes>
-//             </AppLayout>
-//           </BrowserRouter>
-//         </AuthProvider>
-//       </TooltipProvider>
-//     </QueryClientProvider>
-//   );
-// };
-=======
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <TooltipProvider>
@@ -187,16 +81,34 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/chatbots" element={<Chatbots />} />
-              <Route path="/chatbots/mental-health" element={<MentalHealthBot />} />
-              <Route path="/chatbots/recovery-tracker" element={<RecoveryTracker />} />
-              <Route path="/chatbots/symptom-checker" element={<SymptomChecker />} />
+              <Route
+                path="/chatbots/mental-health"
+                element={<MentalHealthBot />}
+              />
+              <Route
+                path="/chatbots/recovery-tracker"
+                element={<RecoveryTracker />}
+              />
+              <Route
+                path="/chatbots/symptom-checker"
+                element={<SymptomChecker />}
+              />
 
               <Route path="/doctors" element={<Doctors />} />
               <Route path="/doctors-details/:id" element={<DoctorsDetails />} />
               <Route path="/appointment" element={<AppointmentForm />} />
-              <Route path="/chatbots/symptom-checker" element={<SymptomChecker />} />
-              <Route path="/chatbots/mental-health" element={<MentalHealthBot />} />
-              <Route path="/chatbots/recovery-tracker" element={<RecoveryTracker />} />
+              <Route
+                path="/chatbots/symptom-checker"
+                element={<SymptomChecker />}
+              />
+              <Route
+                path="/chatbots/mental-health"
+                element={<MentalHealthBot />}
+              />
+              <Route
+                path="/chatbots/recovery-tracker"
+                element={<RecoveryTracker />}
+              />
 
               {/* ✅ Dashboard Role-Based Redirect */}
               <Route path="/dashboard" element={<RoleBasedRedirect />} />
@@ -227,26 +139,32 @@ const App = () => (
                 }
               />
               <Route
-  path="/dashboard/admin/settings"
-  element={
-    <PrivateRoute requiredRole="admin">
-      <SettingsPage />
-    </PrivateRoute>
-  }
-/>
-<Route path="/dashboard/admin/patients" element={<PatientsPage />} />
-<Route path="/dashboard/patient-profile/:id" element={<PatientProfilePage />} />
-
-
-
-              
-              <Route path="/dashboard/admin/manage-doctors" element={<ManageDoctors />} />
+                path="/dashboard/admin/settings"
+                element={
+                  <PrivateRoute requiredRole="admin">
+                    <SettingsPage />
+                  </PrivateRoute>
+                }
+              />
               <Route
-  path="/dashboard/ManageDoctors"
-  element={<Navigate to="/dashboard/admin/manage-doctors" replace />}
-/>
+                path="/dashboard/admin/patients"
+                element={<PatientsPage />}
+              />
+              <Route
+                path="/dashboard/patient-profile/:id"
+                element={<PatientProfilePage />}
+              />
 
-
+              <Route
+                path="/dashboard/admin/manage-doctors"
+                element={<ManageDoctors />}
+              />
+              <Route
+                path="/dashboard/ManageDoctors"
+                element={
+                  <Navigate to="/dashboard/admin/manage-doctors" replace />
+                }
+              />
 
               <Route path="*" element={<NotFound />} />
             </Routes>
@@ -256,6 +174,5 @@ const App = () => (
     </TooltipProvider>
   </QueryClientProvider>
 );
->>>>>>> origin/main
 
 export default App;

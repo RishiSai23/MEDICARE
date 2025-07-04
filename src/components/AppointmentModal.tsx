@@ -26,6 +26,10 @@ const AppointmentModal = ({
               <X className="w-5 h-5" />
             </Button>
           </div>
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/main
           <p className="text-sm text-gray-600 dark:text-gray-300">
             {doctor.specialty}
           </p>
@@ -67,4 +71,8 @@ const AppointmentModal = ({
 };
 
 export default AppointmentModal;
+<<<<<<< HEAD
 //just a fkin empty line that makes zero sense
+=======
+//just a test on whether where i am currently in
+>>>>>>> origin/main

@@ -13,6 +13,7 @@ const Navbar = () => {
   const navItems = [
     { name: "Home", path: "/" },
     { name: "Blog", path: "/blog" },
+    { name: "Patient Dashboard", path: "/patient-dashboard" },
     {
       name: "Chatbots",
       path: "/chatbots",
@@ -33,7 +34,10 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-2 hover:opacity-80 transition-opacity">
+          <Link
+            to="/"
+            className="flex items-center space-x-2 hover:opacity-80 transition-opacity"
+          >
             <Hospital className="h-8 w-8 text-hospital-accent" />
             <span className="text-xl font-bold">HospitalAI</span>
           </Link>
@@ -101,7 +105,11 @@ const Navbar = () => {
               onClick={() => setIsOpen(!isOpen)}
               className="p-2 rounded-md hover:bg-hospital-secondary hover:text-hospital-primary transition-colors"
             >
-              {isOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
+              {isOpen ? (
+                <X className="h-6 w-6" />
+              ) : (
+                <Menu className="h-6 w-6" />
+              )}
             </button>
           </div>
         </div>

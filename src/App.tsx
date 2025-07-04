@@ -42,21 +42,25 @@ import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
 // Chatbot Pages
 
-
+// Initialize Query Client
 const queryClient = new QueryClient();
 
+// ✅ Role-Based Redirect Component
 const RoleBasedRedirect = () => {
   const { user } = useAuth();
   if (!user) return <Navigate to="/login" replace />;
   return <Navigate to={`/dashboard/${user.role}`} replace />;
 };
 
-const AppLayout = ({ children }: { children: React.ReactNode }) => {
-  const location = useLocation();
+// ✅ Layout Component
+const AppLayout = ({ children }) => {
   const isDashboard = location.pathname.startsWith("/dashboard");
-
   return (
-    <div className={`min-h-screen flex flex-col ${isDashboard ? "bg-gray-900 text-yellow-400" : "bg-white text-blue-800"}`}>
+    <div
+      className={`min-h-screen flex flex-col ${
+        isDashboard ? "bg-gray-900 text-yellow-400" : "bg-white text-blue-800"
+      }`}
+    >
       {!isDashboard && <Navbar />}
       <main className="flex-1">{children}</main>
       {!isDashboard && <Footer />}
@@ -77,16 +81,34 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/chatbots" element={<Chatbots />} />
-              <Route path="/chatbots/mental-health" element={<MentalHealthBot />} />
-              <Route path="/chatbots/recovery-tracker" element={<RecoveryTracker />} />
-              <Route path="/chatbots/symptom-checker" element={<SymptomChecker />} />
+              <Route
+                path="/chatbots/mental-health"
+                element={<MentalHealthBot />}
+              />
+              <Route
+                path="/chatbots/recovery-tracker"
+                element={<RecoveryTracker />}
+              />
+              <Route
+                path="/chatbots/symptom-checker"
+                element={<SymptomChecker />}
+              />
 
               <Route path="/doctors" element={<Doctors />} />
               <Route path="/doctors-details/:id" element={<DoctorsDetails />} />
               <Route path="/appointment" element={<AppointmentForm />} />
-              <Route path="/chatbots/symptom-checker" element={<SymptomChecker />} />
-              <Route path="/chatbots/mental-health" element={<MentalHealthBot />} />
-              <Route path="/chatbots/recovery-tracker" element={<RecoveryTracker />} />
+              <Route
+                path="/chatbots/symptom-checker"
+                element={<SymptomChecker />}
+              />
+              <Route
+                path="/chatbots/mental-health"
+                element={<MentalHealthBot />}
+              />
+              <Route
+                path="/chatbots/recovery-tracker"
+                element={<RecoveryTracker />}
+              />
 
               {/* ✅ Dashboard Role-Based Redirect */}
               <Route path="/dashboard" element={<RoleBasedRedirect />} />
@@ -117,26 +139,32 @@ const App = () => (
                 }
               />
               <Route
-  path="/dashboard/admin/settings"
-  element={
-    <PrivateRoute requiredRole="admin">
-      <SettingsPage />
-    </PrivateRoute>
-  }
-/>
-<Route path="/dashboard/admin/patients" element={<PatientsPage />} />
-<Route path="/dashboard/patient-profile/:id" element={<PatientProfilePage />} />
-
-
-
-              
-              <Route path="/dashboard/admin/manage-doctors" element={<ManageDoctors />} />
+                path="/dashboard/admin/settings"
+                element={
+                  <PrivateRoute requiredRole="admin">
+                    <SettingsPage />
+                  </PrivateRoute>
+                }
+              />
               <Route
-  path="/dashboard/ManageDoctors"
-  element={<Navigate to="/dashboard/admin/manage-doctors" replace />}
-/>
+                path="/dashboard/admin/patients"
+                element={<PatientsPage />}
+              />
+              <Route
+                path="/dashboard/patient-profile/:id"
+                element={<PatientProfilePage />}
+              />
 
-
+              <Route
+                path="/dashboard/admin/manage-doctors"
+                element={<ManageDoctors />}
+              />
+              <Route
+                path="/dashboard/ManageDoctors"
+                element={
+                  <Navigate to="/dashboard/admin/manage-doctors" replace />
+                }
+              />
 
               <Route path="*" element={<NotFound />} />
             </Routes>

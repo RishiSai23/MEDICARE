@@ -2,15 +2,16 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
-import { Download } from "lucide-react";
+import { Download, Eye, UserPlus } from "lucide-react";
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Cell, Legend, Pie, PieChart, ResponsiveContainer, Tooltip } from "recharts";
 
 const mockPatients = [
-  { id: 1, name: "John Doe", age: 34, gender: "Male", condition: "Diabetes" },
-  { id: 2, name: "Jane Smith", age: 28, gender: "Female", condition: "Hypertension" },
-  { id: 3, name: "Mark Johnson", age: 45, gender: "Male", condition: "Cardiac Arrest" },
-  { id: 4, name: "Sara Lee", age: 37, gender: "Female", condition: "Diabetes" },
+  { id: 1, name: "John Doe", age: 34, gender: "Male", condition: "Diabetes", image: "https://randomuser.me/api/portraits/men/11.jpg" },
+  { id: 2, name: "Jane Smith", age: 28, gender: "Female", condition: "Hypertension", image: "https://randomuser.me/api/portraits/women/21.jpg" },
+  { id: 3, name: "Mark Johnson", age: 45, gender: "Male", condition: "Cardiac Arrest", image: "https://randomuser.me/api/portraits/men/31.jpg" },
+  { id: 4, name: "Sara Lee", age: 37, gender: "Female", condition: "Diabetes", image: "https://randomuser.me/api/portraits/women/41.jpg" },
 ];
 
 const genderStats = [
@@ -28,10 +29,12 @@ const COLORS = ["#8884d8", "#82ca9d", "#ffc658"];
 
 const PatientsPage = () => {
   const [search, setSearch] = useState("");
+  const navigate = useNavigate();
+  const [sortBy, setSortBy] = useState("name");
 
-  const filteredPatients = mockPatients.filter((p) =>
-    p.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const filteredPatients = mockPatients
+    .filter((p) => p.name.toLowerCase().includes(search.toLowerCase()))
+    .sort((a, b) => (a[sortBy] > b[sortBy] ? 1 : -1));
 
   const downloadReport = () => {
     const report = filteredPatients.map(p => `${p.name}, ${p.age}, ${p.gender}, ${p.condition}`).join("\n");
@@ -42,11 +45,20 @@ const PatientsPage = () => {
     link.click();
   };
 
+  const handleViewProfile = (id: number) => {
+    navigate(`/dashboard/patient-profile/${id}`, { state: { from: "/dashboard/patients" } });
+  };
+
   return (
-    <div className="min-h-screen p-6 bg-hospital-light dark:bg-gray-900 text-hospital-primary dark:text-yellow-400 transition-colors">
-      <Card>
+    <div className="min-h-screen p-6 bg-hospital-light dark:bg-gray-900 text-black dark:text-yellow-400 transition-colors">
+      <Card className="shadow-xl border border-gray-200 dark:border-gray-700">
         <CardHeader>
-          <CardTitle>Patients Directory</CardTitle>
+          <CardTitle className="text-2xl flex justify-between items-center">
+            Patients Directory
+            <Button variant="outline" className="flex items-center gap-2">
+              <UserPlus className="h-4 w-4" /> Add Patient
+            </Button>
+          </CardTitle>
         </CardHeader>
         <CardContent className="space-y-6">
           <div className="flex flex-col md:flex-row gap-4 items-center justify-between">
@@ -56,27 +68,48 @@ const PatientsPage = () => {
               onChange={(e) => setSearch(e.target.value)}
               className="w-full md:w-1/2"
             />
-            <Button onClick={downloadReport} variant="outline">
-              <Download className="mr-2 h-4 w-4" /> Download Report
-            </Button>
+            <div className="flex gap-2">
+              <select
+                className="px-4 py-2 border rounded text-sm dark:bg-gray-800 dark:text-yellow-400 dark:border-gray-600"
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+              >
+                <option value="name">Sort by Name</option>
+                <option value="age">Sort by Age</option>
+              </select>
+              <Button onClick={downloadReport} variant="outline">
+                <Download className="mr-2 h-4 w-4" /> Download Report
+              </Button>
+            </div>
           </div>
 
           <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filteredPatients.map((patient) => (
-              <Card key={patient.id} className="p-4">
-                <h3 className="text-xl font-semibold">{patient.name}</h3>
-                <p>Age: {patient.age}</p>
-                <p>Gender: {patient.gender}</p>
-                <p>Condition: {patient.condition}</p>
-                <Button variant="outline" className="mt-2 w-full">
-                  View Full Profile
+              <Card key={patient.id} className="p-4 bg-white dark:bg-gray-800 shadow hover:shadow-lg transition border border-gray-200 dark:border-gray-700">
+                <img
+                  src={patient.image}
+                  alt={patient.name}
+                  className="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-hospital-primary shadow-md"
+                />
+                <h3 className="text-xl font-semibold text-center text-blue-700 dark:text-yellow-400">{patient.name}</h3>
+                <div className="text-sm text-center space-y-1 mt-2">
+                  <p>Age: {patient.age}</p>
+                  <p>Gender: {patient.gender}</p>
+                  <p>Condition: {patient.condition}</p>
+                </div>
+                <Button
+                  variant="outline"
+                  className="w-full mt-4 flex items-center justify-center gap-2"
+                  onClick={() => handleViewProfile(patient.id)}
+                >
+                  <Eye className="h-4 w-4" /> View Full Profile
                 </Button>
               </Card>
             ))}
           </div>
 
           <div className="grid md:grid-cols-2 gap-6 mt-10">
-            <Card>
+            <Card className="bg-white dark:bg-gray-800">
               <CardHeader>
                 <CardTitle>Gender Distribution</CardTitle>
               </CardHeader>
@@ -103,7 +136,7 @@ const PatientsPage = () => {
               </CardContent>
             </Card>
 
-            <Card>
+            <Card className="bg-white dark:bg-gray-800">
               <CardHeader>
                 <CardTitle>Condition Breakdown</CardTitle>
               </CardHeader>
@@ -131,7 +164,7 @@ const PatientsPage = () => {
             </Card>
           </div>
 
-          <Card className="mt-10">
+          <Card className="mt-10 bg-white dark:bg-gray-800">
             <CardHeader>
               <CardTitle>Recent Appointments</CardTitle>
             </CardHeader>

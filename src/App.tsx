@@ -21,6 +21,10 @@ import PrivateRoute from "./components/PrivateRoute";
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 
 // Pages
+import MentalHealthBot from "@/pages/Chatbots/MentalHealthBot";
+import RecoveryTracker from "@/pages/Chatbots/RecoveryTracker";
+import SymptomChecker from "@/pages/Chatbots/SymptomChecker";
+import PatientProfilePage from "@/pages/Dashboard/PatientProfilePage";
 import PatientsPage from "@/pages/Dashboard/PatientsPage";
 import MainPage from "./components/MainPage";
 import AppointmentForm from "./pages/AppointmentForm";
@@ -30,11 +34,14 @@ import AdminDashboard from "./pages/Dashboard/AdminDashboard";
 import DoctorDashboard from "./pages/Dashboard/DoctorDashboard";
 import ManageDoctors from "./pages/Dashboard/ManageDoctors";
 import PatientDashboard from "./pages/Dashboard/PatientDashboard";
+
 import SettingsPage from "./pages/Dashboard/SettingsPage";
 import Doctors from "./pages/Doctors";
 import DoctorsDetails from "./pages/DoctorsDetails";
 import Login from "./pages/Login";
 import NotFound from "./pages/NotFound";
+// Chatbot Pages
+
 
 const queryClient = new QueryClient();
 
@@ -70,21 +77,16 @@ const App = () => (
               <Route path="/login" element={<Login />} />
               <Route path="/blog" element={<Blog />} />
               <Route path="/chatbots" element={<Chatbots />} />
+              <Route path="/chatbots/mental-health" element={<MentalHealthBot />} />
+              <Route path="/chatbots/recovery-tracker" element={<RecoveryTracker />} />
+              <Route path="/chatbots/symptom-checker" element={<SymptomChecker />} />
+
               <Route path="/doctors" element={<Doctors />} />
               <Route path="/doctors-details/:id" element={<DoctorsDetails />} />
               <Route path="/appointment" element={<AppointmentForm />} />
-              <Route
-                path="/chatbots/symptom-checker"
-                element={<div>Symptom Checker Coming Soon</div>}
-              />
-              <Route
-                path="/chatbots/mental-health"
-                element={<div>Mental Health Bot Coming Soon</div>}
-              />
-              <Route
-                path="/chatbots/recovery-tracker"
-                element={<div>Recovery Tracker Coming Soon</div>}
-              />
+              <Route path="/chatbots/symptom-checker" element={<SymptomChecker />} />
+              <Route path="/chatbots/mental-health" element={<MentalHealthBot />} />
+              <Route path="/chatbots/recovery-tracker" element={<RecoveryTracker />} />
 
               {/* ✅ Dashboard Role-Based Redirect */}
               <Route path="/dashboard" element={<RoleBasedRedirect />} />
@@ -123,6 +125,9 @@ const App = () => (
   }
 />
 <Route path="/dashboard/admin/patients" element={<PatientsPage />} />
+<Route path="/dashboard/patient-profile/:id" element={<PatientProfilePage />} />
+
+
 
               
               <Route path="/dashboard/admin/manage-doctors" element={<ManageDoctors />} />
